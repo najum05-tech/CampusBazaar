@@ -1,0 +1,30 @@
+.section {
+  padding: 90px 0;
+}
+
+.section-label {
+  color: #7b8587;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: clamp(30px, 3.5vw, 42px);
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  color: #172027;
+  margin: 0 0 16px;
+}
+
+.section-subtitle {
+  color: #566064;
+  max-width: 560px;
+  line-height: 1.65;
+}
+
+.section-head {
+  margin-bottom: 50px;
+}

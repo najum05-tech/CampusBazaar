@@ -1,0 +1,119 @@
+.campus-navbar {
+    height: 90px;
+    background: #f9f7f2;
+    position: relative;
+    z-index: 10;
+}
+
+.campus-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #182128;
+
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.campus-logo span span {
+    color: #236b66;
+}
+
+.logo-icon {
+    color: #236b66;
+    font-size: 27px;
+}
+
+
+/* Navigation Links */
+
+.navbar-nav {
+    gap: 28px;
+}
+
+.nav-link {
+    color: #30383b !important;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    padding: 8px 0 !important;
+
+    position: relative;
+}
+
+.nav-link:hover {
+    color: #236b66 !important;
+}
+
+.nav-link.active {
+    color: #236b66 !important;
+}
+
+.nav-link.active::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background: #236b66;
+}
+
+
+/* Right Actions */
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.nav-icon {
+    border: none;
+    background: transparent;
+
+    color: #263136;
+
+    font-size: 21px;
+
+    padding: 5px;
+}
+
+.nav-icon:hover {
+    color: #236b66;
+}
+
+
+/* Sell Button */
+
+.sell-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 12px 20px;
+
+    border-radius: 30px;
+
+    background: #236b66;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.25s ease;
+}
+
+.sell-nav-btn:hover {
+    background: #1b5551;
+    color: white;
+
+    transform: translateY(-1px);
+}
