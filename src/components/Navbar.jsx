@@ -1,5 +1,5 @@
 import '../styles/Navbar.css';
-
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -71,10 +71,9 @@ function Navbar() {
               <i className="bi bi-search"></i>
             </button>
 
-            <button className="nav-icon">
+            <Link to="/login" className="nav-icon">
               <i className="bi bi-person"></i>
-            </button>
-
+            </Link>
             <a href="#" className="sell-nav-btn">
               <i className="bi bi-plus-lg"></i>
               Sell an Item

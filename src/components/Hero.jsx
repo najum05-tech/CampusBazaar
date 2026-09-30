@@ -95,7 +95,7 @@ function Hero() {
                         <div className="product-image">
 
                             <img
-                                src="/images/heroimg.png"
+                                src="/images/desk-hero.png"
                                 alt="CampusBazaar marketplace"
                             />
 

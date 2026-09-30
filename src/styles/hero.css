@@ -91,17 +91,13 @@
     display: inline-flex;
     align-items: center;
     gap: 14px;
-
+    text-decoration: none;
     padding: 16px 25px;
-
     border-radius: 30px;
-
     background: #236b66;
     color: white;
-
     font-size: 15px;
     font-weight: 600;
-
     transition: all 0.25s ease;
 }
 
@@ -123,27 +119,20 @@
     display: inline-flex;
     align-items: center;
     gap: 9px;
-
+    text-decoration: none;
     padding: 15px 25px;
-
     border: 1px solid #7d9492;
-
     border-radius: 30px;
-
     color: #273437;
-
     font-size: 15px;
     font-weight: 500;
-
     transition: all 0.25s ease;
 }
 
 .btn-secondary-custom:hover {
     background: #236b66;
     border-color: #236b66;
-
     color: white;
-
     transform: translateY(-2px);
 }
 
@@ -196,54 +185,34 @@
 ========================================= */
 
 .hero-visual {
-    position: relative;
-
-    height: 650px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: visible;
 }
 
 
 /* Soft Background Shape */
 
 .visual-background {
-    position: absolute;
-
-    width: 570px;
-    height: 530px;
-
-    right: -30px;
-    top: 55px;
-
-    background: #eeeae2;
-
-    border-radius: 48% 52% 45% 55%;
-
-    transform: rotate(-7deg);
+  display: none;
 }
 
 
 /* Product Image */
 
 .product-image {
-    position: relative;
-    width: 1000px;
-    z-index: 2;
-    margin-right: 0;
-    filter: drop-shadow(
-        0 25px 30px rgba(30, 35, 35, 0.08)
-    );
+  width: 700px;
+  margin-right: 0;
 }
 
 .product-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-    clip-path: inset(
-        18% 0 5% 47%
-    );
+  width: 100%;
+  height: auto;
+  display: block;
+  clip-path: none;
+  object-fit: contain;
 }
 
 
