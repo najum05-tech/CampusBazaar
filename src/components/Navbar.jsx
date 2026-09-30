@@ -51,13 +51,13 @@ function Navbar() {
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/about">
                 About
               </a>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/contact">
                 Contact
               </a>
             </li>
@@ -66,6 +66,10 @@ function Navbar() {
 
           {/* Right Actions */}
           <div className="nav-actions">
+
+            <Link to="/cart" className="nav-icon" title="Cart">
+            <i className="bi bi-cart3"></i>
+            </Link>
 
             <button className="nav-icon">
               <i className="bi bi-search"></i>
