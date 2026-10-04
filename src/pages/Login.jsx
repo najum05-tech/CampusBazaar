@@ -36,12 +36,11 @@ export default function Login() {
           </div>
 
           {/* Login Form */}
-          <form className="login-form">
+          <form className="login-form" method="POST">
 
             {/* Email */}
             <div className="input-group-custom">
               <i className="bi bi-envelope"></i>
-
               <input
                 type="email"
                 placeholder="Email address"

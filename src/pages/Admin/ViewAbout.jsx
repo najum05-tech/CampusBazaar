@@ -1,11 +1,11 @@
-// src/pages/dashboard/ViewAbout.jsx
+// src/pages/Admin/ViewAbout.jsx
 import { Link } from "react-router-dom";
-import DashboardLayout from "../../pages/dashboard/DashboardLayout.jsx";
+import AdminLayout from "../../pages/Admin/AdminLayout.jsx";
 import "../../styles/Dashboard/product-actions.css";
 
 export default function ViewAbout() {
   return (
-    <DashboardLayout activePage="about">
+    <AdminLayout activePage="about">
 
       <section className="product-page">
 
@@ -16,7 +16,7 @@ export default function ViewAbout() {
             <p>Preview the About Us content.</p>
           </div>
 
-          <Link to="/dashboard/about/add" className="product-back-btn">
+          <Link to="/admin/about/add" className="product-back-btn">
             <i className="bi bi-plus"></i>
             Add About
           </Link>
@@ -63,11 +63,11 @@ export default function ViewAbout() {
             </div>
 
             <div className="product-action-buttons">
-              <Link to="/dashboard/about/edit" className="product-edit-btn">
+              <Link to="/admin/about/edit" className="product-edit-btn">
                 <i className="bi bi-pencil"></i>
                 Update
               </Link>
-              <Link to="/dashboard/about/delete" className="product-delete-btn">
+              <Link to="/admin/about/delete" className="product-delete-btn">
                 <i className="bi bi-trash"></i>
                 Delete
               </Link>
@@ -78,6 +78,6 @@ export default function ViewAbout() {
 
       </section>
 
-    </DashboardLayout>
+    </AdminLayout>
   );
 }

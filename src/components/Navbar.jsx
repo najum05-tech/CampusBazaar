@@ -33,7 +33,7 @@ function Navbar() {
           <ul className="navbar-nav mx-auto">
 
             <li className="nav-item">
-              <a className="nav-link active" href="#">
+              <a className="nav-link active" href="/">
                 Home
               </a>
             </li>
@@ -59,6 +59,12 @@ function Navbar() {
             <li className="nav-item">
               <a className="nav-link" href="/contact">
                 Contact
+              </a>
+            </li>
+
+            <li className="nav-item">
+              <a className="nav-link" href="/profile">
+                Profile
               </a>
             </li>
 

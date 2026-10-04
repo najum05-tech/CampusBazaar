@@ -1,11 +1,11 @@
-// src/pages/dashboard/DeleteAbout.jsx
+// src/pages/Admin/DeleteAbout.jsx
 import { Link } from "react-router-dom";
-import DashboardLayout from "../../pages/dashboard/DashboardLayout.jsx";
+import AdminLayout from "../dashboard/DashboardLayout.jsx";
 import "../../styles/Dashboard/product-actions.css";
 
 export default function DeleteAbout() {
   return (
-    <DashboardLayout activePage="about">
+    <AdminLayout activePage="about">
 
       <section className="product-page">
 
@@ -50,6 +50,6 @@ export default function DeleteAbout() {
 
       </section>
 
-    </DashboardLayout>
+    </AdminLayout>
   );
 }

@@ -1,10 +1,10 @@
-// src/pages/dashboard/AddAbout.jsx
-import DashboardLayout from "../../pages/dashboard/DashboardLayout.jsx";
+// src/pages/Admin/AddAbout.jsx
+import AdminLayout from "../Admin/AdminLayout.jsx";
 import "../../styles/Dashboard/addproduct.css";
 
 export default function AddAbout() {
   return (
-    <DashboardLayout activePage="about">
+    <AdminLayout activePage="about">
 
       <section className="product-form-card">
 
@@ -66,6 +66,6 @@ export default function AddAbout() {
 
       </section>
 
-    </DashboardLayout>
+    </AdminLayout>
   );
 }

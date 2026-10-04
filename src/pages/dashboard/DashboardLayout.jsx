@@ -9,8 +9,6 @@ export default function DashboardLayout({ activePage, children }) {
     { key: "messages", href: "#", icon: "bi-chat-square-text", label: "Messages", badge: 3 },
     { key: "favorites", href: "#", icon: "bi-heart", label: "Favorites" },
     { key: "orders", href: "#", icon: "bi-bag-check", label: "Orders" },
-    { key: "profile", href: "/dashboard/profile", icon: "bi-person", label: "Profile" },
-    { key: "about", href: "/dashboard/about", icon: "bi-info-circle", label: "About" },
     { key: "settings", href: "#", icon: "bi-gear", label: "Settings" },
     
   ];

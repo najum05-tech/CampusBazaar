@@ -188,36 +188,10 @@ export default function Dashboard() {
         </div>
 
         <aside className="dashboard-right">
-
-          <section className="profile-card">
-            <div className="profile-cover"></div>
-            <div className="profile-avatar">
-              MN
-              <span><i className="bi bi-check"></i></span>
-            </div>
-
-            <div className="profile-info">
-              <div className="profile-name">
-                <h2>Muhammad Najmuddin</h2>
-                <span>Verified</span>
-              </div>
-              <p className="profile-course">BSE-4C · CUI Abbottabad</p>
-              <p className="profile-bio">Student | Tech Enthusiast | Always open to new opportunities.</p>
-              <a href="#" className="edit-profile-button"><i className="bi bi-pencil"></i>Edit Profile</a>
-            </div>
-
-            <div className="profile-details">
-              <div><i className="bi bi-envelope"></i><span>najmuddin@gmail.com</span></div>
-              <div><i className="bi bi-telephone"></i><span>+92 300 1234567</span></div>
-              <div><i className="bi bi-geo-alt"></i><span>Abbottabad, Pakistan</span></div>
-            </div>
-          </section>
-
           <section className="quick-actions">
 
             <h2>Quick Actions</h2>
             <button className="quick-action primary"><i className="bi bi-plus-lg"></i>Post a New Listing</button>
-            <button className="quick-action"><i className="bi bi-person"></i>Update Profile</button>
             <button className="quick-action"><i className="bi bi-box"></i>View My Listings</button>
             <button className="quick-action"><i className="bi bi-chat-square-text"></i>Messages</button>
             <button className="quick-action"><i className="bi bi-gear"></i>Settings</button>

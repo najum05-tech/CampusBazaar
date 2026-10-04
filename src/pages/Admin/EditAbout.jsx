@@ -1,12 +1,12 @@
-// src/pages/dashboard/EditAbout.jsx
+// src/pages/Admin/EditAbout.jsx
 import { Link } from "react-router-dom";
-import DashboardLayout from "../../pages/dashboard/DashboardLayout.jsx";
+import AdminLayout from "../Admin/AdminLayout.jsx";
 import "../../styles/Dashboard/addproduct.css";
 import "../../styles/Dashboard/product-actions.css";
 
 export default function EditAbout() {
   return (
-    <DashboardLayout activePage="about">
+    <AdminLayout activePage="about">
 
       <section className="product-page">
 
@@ -17,7 +17,7 @@ export default function EditAbout() {
             <p>Edit the About Us page content.</p>
           </div>
 
-          <Link to="/dashboard/about" className="product-back-btn">
+          <Link to="/admin/about" className="product-back-btn">
             <i className="bi bi-arrow-left"></i>
             Back to View
           </Link>
@@ -82,6 +82,6 @@ export default function EditAbout() {
 
       </section>
 
-    </DashboardLayout>
+    </AdminLayout>
   );
 }
