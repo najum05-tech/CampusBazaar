@@ -1,4 +1,5 @@
 // src/components/Footer.jsx
+import { Link } from "react-router-dom";
 import "../styles/footer.css";
 export default function Footer() {
   return (
@@ -15,17 +16,17 @@ export default function Footer() {
           <div className="col-6 col-md-2">
             <h6>Explore</h6>
             <ul>
-              <li><a href="/browse">Browse</a></li>
-              <li><a href="/categories">Categories</a></li>
-              <li><a href="/sell">Sell an Item</a></li>
+              <li><Link to="/browse">Browse</Link></li>
+              <li><Link to="/categories">Categories</Link></li>
+              <li><Link to="/sell">Sell an Item</Link></li>
             </ul>
           </div>
 
           <div className="col-6 col-md-2">
             <h6>Company</h6>
             <ul>
-              <li><a href="/about">About</a></li>
-              <li><a href="/contact">Contact</a></li>
+              <li><Link to="/about">About</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
             </ul>
           </div>
 

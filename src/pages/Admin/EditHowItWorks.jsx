@@ -1,4 +1,5 @@
 // src/pages/Admin/EditHowItWorks.jsx
+import {Link} from "react-router-dom";
 import AdminLayout from "./AdminLayout.jsx";
 
 export default function EditHowItWorks() {
@@ -30,7 +31,9 @@ export default function EditHowItWorks() {
           </div>
 
           <div className="form-actions">
-            <a href="/admin/how-it-works" className="btn-admin btn-admin-outline">Cancel</a>
+            <Link to="/admin/how-it-works" className="btn-admin btn-admin-outline">
+              Cancel
+            </Link>
             <button type="submit" className="btn-admin btn-admin-primary">
               <i className="bi bi-check-lg"></i>
               Save Changes

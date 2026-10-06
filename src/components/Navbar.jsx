@@ -7,7 +7,7 @@ function Navbar() {
       <div className="container">
 
         {/* Logo */}
-        <a className="navbar-brand campus-logo" href="#">
+        <Link className="navbar-brand campus-logo" to="#">
           <div className="logo-icon">
             <i className="bi bi-mortarboard-fill"></i>
           </div>
@@ -15,7 +15,7 @@ function Navbar() {
           <span>
             Campus<span>Bazaar</span>
           </span>
-        </a>
+        </Link>
 
         {/* Mobile Toggle */}
         <button
@@ -33,39 +33,39 @@ function Navbar() {
           <ul className="navbar-nav mx-auto">
 
             <li className="nav-item">
-              <a className="nav-link active" href="/">
+              <Link className="nav-link active" to="/">
                 Home
-              </a>
+              </Link>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" to="/browse">
                 Browse
-              </a>
+              </Link>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" to="/categories">
                 Categories
-              </a>
+              </Link>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="/about">
+              <Link className="nav-link" to="/about">
                 About
-              </a>
+              </Link>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="/contact">
+              <Link className="nav-link" to="/contact">
                 Contact
-              </a>
+              </Link>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="/profile">
+              <Link className="nav-link" to="/profile">
                 Profile
-              </a>
+              </Link>
             </li>
 
           </ul>
@@ -84,10 +84,10 @@ function Navbar() {
             <Link to="/login" className="nav-icon">
               <i className="bi bi-person"></i>
             </Link>
-            <a href="#" className="sell-nav-btn">
+            <Link to="/sell" className="sell-nav-btn">
               <i className="bi bi-plus-lg"></i>
               Sell an Item
-            </a>
+            </Link>
 
           </div>
 

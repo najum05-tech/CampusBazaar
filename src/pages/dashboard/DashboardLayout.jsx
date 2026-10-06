@@ -1,4 +1,5 @@
 // import Dashboard from src/pages/dashboard/DashboardLayout.jsx
+import { Link } from "react-router-dom";
 import "../../styles/dashboard.css";
 
 export default function DashboardLayout({ activePage, children }) {
@@ -19,27 +20,27 @@ export default function DashboardLayout({ activePage, children }) {
       <aside className="dashboard-sidebar">
 
         <div>
-          <a className="navbar-brand dashboard-logo" href="#">
+          <Link className="navbar-brand dashboard-logo" to="#">
             <div className="logo-icon">
               <i className="bi bi-mortarboard-fill"></i>
             </div>
             <span>
               Campus<span>Bazaar</span>
             </span>
-          </a>
+          </Link>
 
           <nav className="dashboard-nav">
             {navItems.map((item) => (
 
-              <a
+              <Link
                 key={item.key}
-                href={item.href}
+                to={item.href}
                 className={`dashboard-nav-item${activePage === item.key ? " active" : ""}`}
               >
                 <i className={`bi ${item.icon}`}></i>
                 <span>{item.label}</span>
                 {item.badge && <span className="message-count">{item.badge}</span>}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
@@ -51,10 +52,10 @@ export default function DashboardLayout({ activePage, children }) {
             <div>Marketplace</div>
           </div>
 
-          <a href="/" className="dashboard-nav-item logout-item">
+          <Link to="/" className="dashboard-nav-item logout-item">
             <i className="bi bi-box-arrow-left"></i>
             <span>Log out</span>
-          </a>
+          </Link>
         </div>
 
       </aside>

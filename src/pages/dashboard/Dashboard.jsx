@@ -202,7 +202,7 @@ export default function Dashboard() {
             <div>
               <h3>Need help?</h3>
               <p>Check our FAQs or contact support.</p>
-              <a href="#">Go to Help Center <i className="bi bi-arrow-right"></i></a>
+              <Link to="#">Go to Help Center <i className="bi bi-arrow-right"></i></Link>
             </div>
           </section>
 

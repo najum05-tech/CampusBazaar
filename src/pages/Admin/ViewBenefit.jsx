@@ -1,5 +1,6 @@
 // src/pages/Admin/ViewBenefit.jsx
 import AdminLayout from "./AdminLayout.jsx";
+import {Link} from "react-router-dom";
 
 export default function ViewBenefit() {
   return (
@@ -13,10 +14,10 @@ export default function ViewBenefit() {
             <p>Read-only details of this benefit.</p>
           </div>
 
-          <a href="/admin/benefits/edit/1" className="btn-admin btn-admin-primary">
+          <Link to="/admin/benefits/edit/1" className="btn-admin btn-admin-primary">
             <i className="bi bi-pencil"></i>
             Edit
-          </a>
+          </Link>
         </div>
 
         <div className="admin-view-grid">
@@ -43,7 +44,9 @@ export default function ViewBenefit() {
         </div>
 
         <div className="form-actions">
-          <a href="/admin/benefits" className="btn-admin btn-admin-outline">Back to List</a>
+          <Link to="/admin/benefits" className="btn-admin btn-admin-outline">
+            Back to List
+          </Link>
         </div>
 
       </section>

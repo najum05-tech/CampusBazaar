@@ -1,16 +1,17 @@
 // src/components/admin/AdminLayout.jsx
+import { Link } from "react-router-dom";
 import "../../styles/admin.css";
 
 export default function AdminLayout({ activePage, children }) {
   const navItems = [
-    { key: "overview", href: "/admin", icon: "bi-grid", label: "Overview" },
-    { key: "users", href: "/admin/users", icon: "bi-people", label: "Manage Users" },
-    { key: "hero", href: "/admin/hero", icon: "bi-layout-text-window", label: "Hero Section" },
-    { key: "categories", href: "/admin/categories", icon: "bi-tags", label: "Categories" },
-    { key: "how-it-works", href: "/admin/how-it-works", icon: "bi-diagram-3", label: "How It Works" },
-    { key: "benefits", href: "/admin/benefits", icon: "bi-stars", label: "Why CampusBazaar" },
-    { key: "about", href: "/admin/about", icon: "bi-info-circle", label: "About" },
-    { key: "settings", href: "/admin/settings", icon: "bi-gear", label: "Settings" },
+    { key: "overview", to: "/admin", icon: "bi-grid", label: "Overview" },
+    { key: "users", to: "/admin/users", icon: "bi-people", label: "Manage Users" },
+    { key: "hero", to: "/admin/hero", icon: "bi-layout-text-window", label: "Hero Section" },
+    { key: "categories", to: "/admin/categories", icon: "bi-tags", label: "Categories" },
+    { key: "how-it-works", to: "/admin/how-it-works", icon: "bi-diagram-3", label: "How It Works" },
+    { key: "benefits", to: "/admin/benefits", icon: "bi-stars", label: "Why CampusBazaar" },
+    { key: "about", to: "/admin/about", icon: "bi-info-circle", label: "About" },
+    { key: "settings", to: "/admin/settings", icon: "bi-gear", label: "Settings" },
   ];
 
   return (
@@ -19,14 +20,14 @@ export default function AdminLayout({ activePage, children }) {
       <aside className="admin-sidebar">
 
         <div>
-          <a className="navbar-brand admin-logo" href="#">
+          <Link className="navbar-brand admin-logo" to="#">
             <div className="logo-icon">
               <i className="bi bi-mortarboard-fill"></i>
             </div>
             <span>
               Campus<span>Bazaar</span>
             </span>
-          </a>
+          </Link>
 
           <div className="admin-role-tag">
             <i className="bi bi-shield-lock"></i>
@@ -36,22 +37,22 @@ export default function AdminLayout({ activePage, children }) {
 
           <nav className="admin-nav">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.key}
-                href={item.href}
+                to={item.to}
                 className={`admin-nav-item${activePage === item.key ? " active" : ""}`}
               >
                 <i className={`bi ${item.icon}`}></i>
                 <span>{item.label}</span>
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
 
-        <a href="/" className="admin-nav-item logout-item">
+        <Link to="/" className="admin-nav-item logout-item">
           <i className="bi bi-box-arrow-left"></i>
           <span>Log out</span>
-        </a>
+        </Link>
 
       </aside>
 

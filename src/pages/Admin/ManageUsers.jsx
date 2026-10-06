@@ -1,4 +1,5 @@
 // src/pages/admin/ManageUsers.jsx
+import {Link} from "react-router-dom";
 import AdminLayout from "../../pages/Admin/AdminLayout.jsx";
 
 const users = [
@@ -20,10 +21,10 @@ export default function ManageUsers() {
             <p>All registered students on CampusBazaar.</p>
           </div>
 
-          <a href="/admin/users/add" className="btn-admin btn-admin-primary">
+          <Link to="/admin/users/add" className="btn-admin btn-admin-primary">
             <i className="bi bi-plus-lg"></i>
             Add New User
-          </a>
+          </Link>
         </div>
 
         <table className="admin-table">
@@ -51,9 +52,9 @@ export default function ManageUsers() {
                 </td>
                 <td>{user.joined}</td>
                 <td>
-                  <a href={`/admin/users/edit/${user.id}`} className="icon-btn">
+                  <Link to={`/admin/users/edit/${user.id}`} className="icon-btn">
                     <i className="bi bi-pencil"></i>
-                  </a>
+                  </Link>
                   <button className="icon-btn danger">
                     <i className="bi bi-trash"></i>
                   </button>

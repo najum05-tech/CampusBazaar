@@ -1,4 +1,5 @@
 // src/pages/admin/ManageHero.jsx
+import {Link} from "react-router-dom";
 import AdminLayout from "../../pages/Admin/AdminLayout.jsx";
 
 const heroSlides = [
@@ -26,10 +27,10 @@ export default function ManageHero() {
             <p>Content shown at the top of the homepage.</p>
           </div>
 
-          <a href="/admin/hero/add" className="btn-admin btn-admin-primary">
+          <Link to="/admin/hero/add" className="btn-admin btn-admin-primary">
             <i className="bi bi-plus-lg"></i>
             Add New Hero
-          </a>
+          </Link>
 
         </div>
 
@@ -53,12 +54,12 @@ export default function ManageHero() {
                   <span className="status-badge active">{hero.status}</span>
                 </td>
                 <td>
-                  <a href={`/admin/hero/view/${hero.id}`} className="icon-btn">
+                  <Link to={`/admin/hero/view/${hero.id}`} className="icon-btn">
                     <i className="bi bi-eye"></i>
-                  </a>
-                  <a href={`/admin/hero/edit/${hero.id}`} className="icon-btn">
+                  </Link>
+                  <Link to={`/admin/hero/edit/${hero.id}`} className="icon-btn">
                     <i className="bi bi-pencil"></i>
-                  </a>
+                  </Link>
                   <button className="icon-btn danger">
                     <i className="bi bi-trash"></i>
                   </button>

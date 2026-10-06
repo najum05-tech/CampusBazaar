@@ -1,4 +1,5 @@
 // src/pages/Admin/ManageBenefits.jsx
+import {Link} from "react-router-dom";
 import AdminLayout from "./AdminLayout.jsx";
 
 const benefits = [
@@ -20,10 +21,10 @@ export default function ManageBenefits() {
             <p>Benefits shown in the "Why CampusBazaar" homepage section.</p>
           </div>
 
-          <a href="/admin/benefits/add" className="btn-admin btn-admin-primary">
+          <Link to="/admin/benefits/add" className="btn-admin btn-admin-primary">
             <i className="bi bi-plus-lg"></i>
             Add New Benefit
-          </a>
+          </Link>
         </div>
 
         <table className="admin-table">
@@ -43,12 +44,12 @@ export default function ManageBenefits() {
                 <td>{b.title}</td>
                 <td>{b.desc}</td>
                 <td>
-                  <a href={`/admin/benefits/view/${b.id}`} className="icon-btn">
+                  <Link to={`/admin/benefits/view/${b.id}`} className="icon-btn">
                     <i className="bi bi-eye"></i>
-                  </a>
-                  <a href={`/admin/benefits/edit/${b.id}`} className="icon-btn">
+                  </Link>
+                  <Link to={`/admin/benefits/edit/${b.id}`} className="icon-btn">
                     <i className="bi bi-pencil"></i>
-                  </a>
+                  </Link>
                   <button className="icon-btn danger">
                     <i className="bi bi-trash"></i>
                   </button>

@@ -1,6 +1,7 @@
 // src/components/FeaturedProducts.jsx
 import { products } from "../data/products.js";
 import ProductCard from "./ProductCard.jsx";
+import { Link } from "react-router-dom";
 import "../styles/products.css";
 
 export default function FeaturedProducts() {
@@ -12,9 +13,9 @@ export default function FeaturedProducts() {
             <div className="section-label">Marketplace</div>
             <h2 className="section-title">Featured Listings</h2>
           </div>
-          <a href="/browse" className="view-all-link">
+          <Link to="/browse" className="view-all-link">
             View all <i className="bi bi-arrow-right"></i>
-          </a>
+          </Link>
         </div>
 
         <div className="row g-4">

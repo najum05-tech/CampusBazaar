@@ -1,6 +1,6 @@
 // src/pages/admin/ViewHero.jsx
 import AdminLayout from "../../pages/Admin/AdminLayout.jsx";
-
+import {Link} from "react-router-dom";
 export default function ViewHero() {
   return (
     <AdminLayout activePage="hero">
@@ -13,10 +13,10 @@ export default function ViewHero() {
             <p>Read-only preview of this hero section.</p>
           </div>
 
-          <a href="/admin/hero/edit/1" className="btn-admin btn-admin-primary">
+          <Link to="/admin/hero/edit/1" className="btn-admin btn-admin-primary">
             <i className="bi bi-pencil"></i>
             Edit
-          </a>
+          </Link>
         </div>
 
         <div className="admin-view-grid">
@@ -56,7 +56,9 @@ export default function ViewHero() {
         </div>
 
         <div className="form-actions">
-          <a href="/admin/hero" className="btn-admin btn-admin-outline">Back to List</a>
+          <Link to="/admin/hero" className="btn-admin btn-admin-outline">
+            Back to List
+          </Link>
         </div>
 
       </section>

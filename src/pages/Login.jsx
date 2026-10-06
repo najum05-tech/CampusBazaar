@@ -17,14 +17,14 @@ export default function Login() {
         <div className="login-content">
 
          {/* Logo */}
-        <a className="navbar-brand campus-logo" href="#">
+        <Link className="navbar-brand campus-logo" to="#">
           <div className="logo-icon">
             <i className="bi bi-mortarboard-fill"></i>
           </div>
           <span>
             Campus<span>Bazaar</span>
           </span>
-        </a>
+        </Link>
           {/* Heading */}
           <div className="login-heading">
             <h1>Welcome back</h1>
@@ -109,16 +109,16 @@ export default function Login() {
           </span>
 
           <div className="footer-links">
-            <a href="#">English</a>
+            <Link to="#">English</Link>
             <i className="bi bi-chevron-down"></i>
 
             <span className="footer-divider"></span>
 
-            <a href="#">Contact Us</a>
+            <Link to="#">Contact Us</Link>
 
             <span className="footer-divider"></span>
 
-            <a href="#">Help</a>
+            <Link to="#">Help</Link>
           </div>
 
         </div>

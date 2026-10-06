@@ -21,24 +21,6 @@ return (
 <>
  <Navbar /> 
  <div className="profile-page"> 
-    {/*<header className="profile-navbar"> <Link to="/" className="profile-brand"> <i className="bi bi-mortarboard-fill brand-icon"></i> <span>Campus<span className="brand-accent">Bazaar</span></span> </Link>*/}
-
-{/* 
-    <div className="profile-search">
-      <i className="bi bi-search"></i>
-      <input type="text" placeholder="Search CampusBazaar..." />
-    </div>
-
-    <nav className="profile-nav-links">
-      <Link to="/"><i className="bi bi-house"></i><span>Home</span></Link>
-      <Link to="/products"><i className="bi bi-compass"></i><span>Explore</span></Link>
-      <Link to="/messages"><i className="bi bi-chat-square"></i><span>Messages</span></Link>
-      <Link to="/favorites"><i className="bi bi-bookmark"></i><span>Saved</span></Link>
-    </nav>
-
-    <Link to="/profile" className="profile-mini-avatar">MN</Link>
-  </header> */}
-
   <main className="profile-container">
     <section className="profile-cover">
       <img src="/images/campus-hero.png" alt="Campus cover" />

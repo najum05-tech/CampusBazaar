@@ -1,5 +1,5 @@
 import "../styles/hero.css";
-
+import { Link } from "react-router-dom";
 function Hero() {
     return (
         <section className="hero-section">
@@ -34,15 +34,15 @@ function Hero() {
 
                         <div className="hero-buttons">
 
-                            <a href="/browse" className="btn-primary-custom">
+                            <Link to="/browse" className="btn-primary-custom">
                                 Explore Marketplace
                                 <i className="bi bi-arrow-right"></i>
-                            </a>
+                            </Link>
 
-                            <a href="/sell" className="btn-secondary-custom">
+                            <Link to="/sell" className="btn-secondary-custom">
                                 <i className="bi bi-plus-lg"></i>
                                 Sell an Item
-                            </a>
+                            </Link>
 
                         </div>
 

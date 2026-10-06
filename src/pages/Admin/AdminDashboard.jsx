@@ -1,5 +1,7 @@
 // src/pages/admin/AdminDashboard.jsx
+import {Link} from "react-router-dom";
 import AdminLayout from "../../pages/Admin/AdminLayout.jsx";
+import "../../styles/admin.css";
 
 export default function AdminDashboard() {
   const sections = [
@@ -14,7 +16,7 @@ export default function AdminDashboard() {
 
       <div className="admin-overview-grid">
         {sections.map((s) => (
-          <a href={s.href} className="admin-overview-card" key={s.label}>
+          <Link to={s.href} className="admin-overview-card" key={s.label}>
             <div className="admin-overview-icon">
               <i className={`bi ${s.icon}`}></i>
             </div>
@@ -23,7 +25,7 @@ export default function AdminDashboard() {
               <span>{s.count}</span>
             </div>
             <i className="bi bi-arrow-right admin-overview-arrow"></i>
-          </a>
+          </Link>
         ))}
       </div>
 

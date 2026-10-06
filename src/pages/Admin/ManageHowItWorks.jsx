@@ -1,4 +1,5 @@
 // src/pages/Admin/ManageHowItWorks.jsx
+import {Link} from "react-router-dom";
 import AdminLayout from "./AdminLayout.jsx";
 
 const steps = [
@@ -19,10 +20,10 @@ export default function ManageHowItWorks() {
             <p>Steps shown in the "How It Works" homepage section.</p>
           </div>
 
-          <a href="/admin/how-it-works/add" className="btn-admin btn-admin-primary">
+          <Link to="/admin/how-it-works/add" className="btn-admin btn-admin-primary">
             <i className="bi bi-plus-lg"></i>
             Add New Step
-          </a>
+          </Link>
         </div>
 
         <table className="admin-table">
@@ -42,12 +43,12 @@ export default function ManageHowItWorks() {
                 <td>{step.title}</td>
                 <td>{step.desc}</td>
                 <td>
-                  <a href={`/admin/how-it-works/view/${step.id}`} className="icon-btn">
+                  <Link to={`/admin/how-it-works/view/${step.id}`} className="icon-btn">
                     <i className="bi bi-eye"></i>
-                  </a>
-                  <a href={`/admin/how-it-works/edit/${step.id}`} className="icon-btn">
+                  </Link>
+                  <Link to={`/admin/how-it-works/edit/${step.id}`} className="icon-btn">
                     <i className="bi bi-pencil"></i>
-                  </a>
+                  </Link>
                   <button className="icon-btn danger">
                     <i className="bi bi-trash"></i>
                   </button>

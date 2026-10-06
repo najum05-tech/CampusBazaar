@@ -1,5 +1,6 @@
 // src/pages/Admin/ViewCategory.jsx
 import AdminLayout from "./AdminLayout.jsx";
+import {Link} from "react-router-dom";
 
 export default function ViewCategory() {
   return (
@@ -13,10 +14,10 @@ export default function ViewCategory() {
             <p>Read-only details of this category.</p>
           </div>
 
-          <a href="/admin/categories/edit/1" className="btn-admin btn-admin-primary">
+          <Link to="/admin/categories/edit/1" className="btn-admin btn-admin-primary">
             <i className="bi bi-pencil"></i>
             Edit
-          </a>
+          </Link>
         </div>
 
         <div className="admin-view-grid">
@@ -47,7 +48,9 @@ export default function ViewCategory() {
         </div>
 
         <div className="form-actions">
-          <a href="/admin/categories" className="btn-admin btn-admin-outline">Back to List</a>
+          <Link to="/admin/categories" className="btn-admin btn-admin-outline">
+            Back to List
+          </Link>
         </div>
 
       </section>

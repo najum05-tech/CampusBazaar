@@ -1,4 +1,5 @@
 // src/pages/Admin/ManageCategories.jsx
+import {Link} from "react-router-dom";
 import AdminLayout from "./AdminLayout.jsx";
 
 const categories = [
@@ -20,10 +21,10 @@ export default function ManageCategories() {
             <p>Categories shown on the homepage and listing filters.</p>
           </div>
 
-          <a href="/admin/categories/add" className="btn-admin btn-admin-primary">
+          <Link to="/admin/categories/add" className="btn-admin btn-admin-primary">
             <i className="bi bi-plus-lg"></i>
             Add New Category
-          </a>
+          </Link>
         </div>
 
         <table className="admin-table">
@@ -43,12 +44,12 @@ export default function ManageCategories() {
                 <td>{cat.name}</td>
                 <td><code>{cat.icon}</code></td>
                 <td>
-                  <a href={`/admin/categories/view/${cat.id}`} className="icon-btn">
+                  <Link to={`/admin/categories/view/${cat.id}`} className="icon-btn">
                     <i className="bi bi-eye"></i>
-                  </a>
-                  <a href={`/admin/categories/edit/${cat.id}`} className="icon-btn">
+                  </Link>
+                  <Link to={`/admin/categories/edit/${cat.id}`} className="icon-btn">
                     <i className="bi bi-pencil"></i>
-                  </a>
+                  </Link>
                   <button className="icon-btn danger">
                     <i className="bi bi-trash"></i>
                   </button>

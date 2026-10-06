@@ -18,7 +18,7 @@ export default function Signup() {
         <div className="signup-content">
 
           {/* Logo */}
-          <a className="navbar-brand campus-logo" href="#">
+          <Link className="navbar-brand campus-logo" to="#">
           <div className="logo-icon">
             <i className="bi bi-mortarboard-fill"></i>
           </div>
@@ -26,7 +26,7 @@ export default function Signup() {
           <span>
             Campus<span>Bazaar</span>
           </span>
-        </a>
+        </Link>
 
           {/* Heading */}
           <div className="signup-heading">
@@ -156,17 +156,17 @@ export default function Signup() {
 
           <div className="signup-footer-links">
 
-            <a href="#">English</a>
+            <Link to="#">English</Link>
 
             <i className="bi bi-chevron-down"></i>
 
             <span className="signup-divider"></span>
 
-            <a href="#">Contact Us</a>
+            <Link to="#">Contact Us</Link>
 
             <span className="signup-divider"></span>
 
-            <a href="#">Help</a>
+            <Link to="#">Help</Link>
 
           </div>
 

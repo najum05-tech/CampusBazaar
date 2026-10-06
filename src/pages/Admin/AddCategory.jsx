@@ -1,4 +1,5 @@
 // src/pages/Admin/AddCategory.jsx
+import {Link} from "react-router-dom";
 import AdminLayout from "./AdminLayout.jsx";
 
 export default function AddCategory() {
@@ -34,7 +35,9 @@ export default function AddCategory() {
           </div>
 
           <div className="form-actions">
-            <a href="/admin/categories" className="btn-admin btn-admin-outline">Cancel</a>
+            <Link to="/admin/categories" className="btn-admin btn-admin-outline">
+              Cancel
+            </Link>
             <button type="submit" className="btn-admin btn-admin-primary">
               <i className="bi bi-check-lg"></i>
               Add Category

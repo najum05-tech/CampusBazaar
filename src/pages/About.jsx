@@ -1,6 +1,7 @@
 // src/pages/About.jsx
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer.jsx";
+import { Link } from "react-router-dom";
 import "../styles/about.css";
 
 export default function About() {
@@ -108,13 +109,13 @@ export default function About() {
               <h2>Ready to join CampusBazaar?</h2>
               <p>Create an account and start buying or selling on your campus today.</p>
               <div className="about-cta-actions">
-                <a href="/signup" className="about-btn-primary">
+                <Link to="/signup" className="about-btn-primary">
                   Get Started
                   <i className="bi bi-arrow-right"></i>
-                </a>
-                <a href="/contact" className="about-btn-outline">
+                </Link>
+                <Link to="/contact" className="about-btn-outline">
                   Contact Us
-                </a>
+                </Link>
               </div>
             </div>
           </div>

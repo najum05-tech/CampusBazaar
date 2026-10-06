@@ -1,4 +1,5 @@
 // src/pages/Admin/AddHowItWorks.jsx
+import {Link} from "react-router-dom";
 import AdminLayout from "./AdminLayout.jsx";
 
 export default function AddHowItWorks() {
@@ -31,7 +32,9 @@ export default function AddHowItWorks() {
 
           <div className="form-actions">
 
-            <a href="/admin/how-it-works" className="btn-admin btn-admin-outline">Cancel</a>
+            <Link to="/admin/how-it-works" className="btn-admin btn-admin-outline">
+              Cancel
+            </Link>
             <button type="submit" className="btn-admin btn-admin-primary">
               <i className="bi bi-check-lg"></i>
               Add Step

@@ -1,4 +1,5 @@
 // src/pages/admin/EditHero.jsx
+import {Link} from "react-router-dom";
 import AdminLayout from "../../pages/Admin/AdminLayout.jsx";
 
 export default function EditHero() {
@@ -64,7 +65,9 @@ export default function EditHero() {
           </div>
 
           <div className="form-actions">
-            <a href="/admin/hero" className="btn-admin btn-admin-outline">Cancel</a>
+            <Link to="/admin/hero" className="btn-admin btn-admin-outline">
+              Cancel
+            </Link>
             <button type="submit" className="btn-admin btn-admin-primary">
               <i className="bi bi-check-lg"></i>
               Save Changes
