@@ -1,7 +1,7 @@
 // src/pages/dashboard/MyListings.jsx
 import { Link } from "react-router-dom";
 import DashboardLayout from "../../pages/dashboard/DashboardLayout.jsx";
-import { products } from "../../data/products";
+import { products } from "../../data/products.js";
 
 export default function MyListings() {
   return (
