@@ -2,9 +2,17 @@ import { useState } from "react";
 import "../styles/login.css";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 // import logo from "../assets/images/logo.png";
 import campusHero from "../assets/images/campus-hero.png";
+
+// Zod Validation Schema
+const loginSchema = z.object({
+  email: z.string().min(1).email(),
+  password: z.string().min(6),
+});
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,7 +21,9 @@ export default function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+  });
 
   const handleMySubmissionFormFunction = (data) => {
     console.log("Form submitted with data:", data);
@@ -50,29 +60,39 @@ export default function Login() {
             method="POST"
           >
             {/* Email */}
-            <div className="input-group-custom">
+            <div
+              className={`input-group-custom ${
+                errors.email ? "input-alert" : ""
+              }`}
+            >
               <i className="bi bi-envelope"></i>
               <input
                 type="email"
-                placeholder="Email address"
-                {...register("email", { required: "Email is required" })}
+                placeholder={
+                  errors.email
+                    ? "Valid email address is required!"
+                    : "Email address"
+                }
+                {...register("email")}
               />
-              {errors.email && (
-                <span className="error-message">{errors.email.message}</span>
-              )}
             </div>
 
             {/* Password */}
-            <div className="input-group-custom">
+            <div
+              className={`input-group-custom ${
+                errors.password ? "input-alert" : ""
+              }`}
+            >
               <i className="bi bi-lock"></i>
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                {...register("password", { required: "Password is required" })}
+                placeholder={
+                  errors.password
+                    ? "Password is required (min 6 chars)!"
+                    : "Password"
+                }
+                {...register("password")}
               />
-              {errors.password && (
-                <span className="error-message">{errors.password.message}</span>
-              )}
               <button
                 type="button"
                 className="password-toggle"

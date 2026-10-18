@@ -159,6 +159,21 @@
   color: #a1a7a8;
 }
 
+.input-group-custom.input-alert {
+  border: 1.5px solid #dc3545 !important;
+  background-color: #fff5f5 !important;
+}
+
+.input-group-custom.input-alert i {
+  color: #dc3545 !important;
+}
+
+.input-group-custom.input-alert input::placeholder {
+  color: #dc3545 !important;
+  font-weight: 500;
+}
+
+
 
 /* Password button */
 

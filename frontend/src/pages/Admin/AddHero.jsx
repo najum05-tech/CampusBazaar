@@ -1,8 +1,36 @@
 // src/pages/admin/AddHero.jsx
 import {Link} from "react-router-dom";
 import AdminLayout from "../../pages/Admin/AdminLayout.jsx";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+// Zod Validation Schema for Add Hero Form
+const heroSchema = z.object({
+  smallLabel: z.string().min(1),
+  titleLine1: z.string().min(1),
+  titleLine2: z.string().min(1),
+  description: z.string().min(1),
+  primaryButtonText: z.string().min(1),
+  secondaryButtonText: z.string().min(1),
+  status: z.string().min(1),
+});
 
 export default function AddHero() {
+  // Connect Zod to react-hook-form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(heroSchema),
+  });
+
+  // Function to log valid submitted data
+  const handleMySubmissionFormFunction = (data) => {
+    console.log("Hero Form submitted with data:", data);
+  };
+
   return (
     <AdminLayout activePage="hero">
 
@@ -11,46 +39,92 @@ export default function AddHero() {
         <h2>Add Hero Content</h2>
         <p>Create new content for the homepage hero section.</p>
 
-        <form className="admin-form">
+        <form className="admin-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 
           <div className="form-group">
-            <label>Small Label</label>
-            <input type="text" placeholder="e.g. BUY • SELL • EXCHANGE • CONNECT" />
+            <label className={errors.smallLabel ? "label-alert" : ""}>
+              {errors.smallLabel ? "Small Label is required!" : "Small Label"}
+            </label>
+            <input
+              type="text"
+              className={errors.smallLabel ? "input-alert" : ""}
+              placeholder={errors.smallLabel ? "Small label is required!" : "e.g. BUY • SELL • EXCHANGE • CONNECT"}
+              {...register("smallLabel")}
+            />
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label>Title Line 1</label>
-              <input type="text" placeholder="e.g. Your Campus." />
+              <label className={errors.titleLine1 ? "label-alert" : ""}>
+                {errors.titleLine1 ? "Title Line 1 is required!" : "Title Line 1"}
+              </label>
+              <input
+                type="text"
+                className={errors.titleLine1 ? "input-alert" : ""}
+                placeholder={errors.titleLine1 ? "Title line 1 is required!" : "e.g. Your Campus."}
+                {...register("titleLine1")}
+              />
             </div>
 
             <div className="form-group">
-              <label>Title Line 2 (highlighted)</label>
-              <input type="text" placeholder="e.g. Your Marketplace." />
+              <label className={errors.titleLine2 ? "label-alert" : ""}>
+                {errors.titleLine2 ? "Title Line 2 is required!" : "Title Line 2 (highlighted)"}
+              </label>
+              <input
+                type="text"
+                className={errors.titleLine2 ? "input-alert" : ""}
+                placeholder={errors.titleLine2 ? "Title line 2 is required!" : "e.g. Your Marketplace."}
+                {...register("titleLine2")}
+              />
             </div>
           </div>
 
           <div className="form-group">
 
-            <label>Description</label>
-            <textarea placeholder="Short description shown under the heading..."></textarea>
+            <label className={errors.description ? "label-alert" : ""}>
+              {errors.description ? "Description is required!" : "Description"}
+            </label>
+            <textarea
+              className={errors.description ? "input-alert" : ""}
+              placeholder={errors.description ? "Description is required!" : "Short description shown under the heading..."}
+              {...register("description")}
+            ></textarea>
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label>Primary Button Text</label>
-              <input type="text" placeholder="e.g. Explore Marketplace" />
+              <label className={errors.primaryButtonText ? "label-alert" : ""}>
+                {errors.primaryButtonText ? "Primary Button Text is required!" : "Primary Button Text"}
+              </label>
+              <input
+                type="text"
+                className={errors.primaryButtonText ? "input-alert" : ""}
+                placeholder={errors.primaryButtonText ? "Primary button text is required!" : "e.g. Explore Marketplace"}
+                {...register("primaryButtonText")}
+              />
             </div>
 
             <div className="form-group">
-              <label>Secondary Button Text</label>
-              <input type="text" placeholder="e.g. Sell an Item" />
+              <label className={errors.secondaryButtonText ? "label-alert" : ""}>
+                {errors.secondaryButtonText ? "Secondary Button Text is required!" : "Secondary Button Text"}
+              </label>
+              <input
+                type="text"
+                className={errors.secondaryButtonText ? "input-alert" : ""}
+                placeholder={errors.secondaryButtonText ? "Secondary button text is required!" : "e.g. Sell an Item"}
+                {...register("secondaryButtonText")}
+              />
             </div>
           </div>
 
           <div className="form-group">
-            <label>Status</label>
-            <select>
+            <label className={errors.status ? "label-alert" : ""}>
+              {errors.status ? "Status is required!" : "Status"}
+            </label>
+            <select
+              className={errors.status ? "input-alert" : ""}
+              {...register("status")}
+            >
               <option>Active</option>
               <option>Inactive</option>
             </select>

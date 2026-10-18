@@ -1,8 +1,32 @@
 // src/pages/Admin/AddBenefit.jsx
 import {Link} from "react-router-dom";
 import AdminLayout from "./AdminLayout.jsx";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+// Zod Validation Schema for Add Benefit Form
+const benefitSchema = z.object({
+  title: z.string().min(1),
+  iconClass: z.string().min(1),
+  description: z.string().min(1),
+});
 
 export default function AddBenefit() {
+  // Connect Zod to react-hook-form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(benefitSchema),
+  });
+
+  // Function to log valid submitted data
+  const handleMySubmissionFormFunction = (data) => {
+    console.log("Benefit Form submitted with data:", data);
+  };
+
   return (
     <AdminLayout activePage="benefits">
 
@@ -11,23 +35,43 @@ export default function AddBenefit() {
         <h2>Add New Benefit</h2>
         <p>Create a new item for the "Why CampusBazaar" section.</p>
 
-        <form className="admin-form">
+        <form className="admin-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 
           <div className="form-row">
             <div className="form-group">
-              <label>Title</label>
-              <input type="text" placeholder="e.g. Secure" />
+              <label className={errors.title ? "label-alert" : ""}>
+                {errors.title ? "Title is required!" : "Title"}
+              </label>
+              <input
+                type="text"
+                className={errors.title ? "input-alert" : ""}
+                placeholder={errors.title ? "Title is required!" : "e.g. Secure"}
+                {...register("title")}
+              />
             </div>
 
             <div className="form-group">
-              <label>Bootstrap Icon Class</label>
-              <input type="text" placeholder="e.g. bi-shield-check" />
+              <label className={errors.iconClass ? "label-alert" : ""}>
+                {errors.iconClass ? "Bootstrap Icon Class is required!" : "Bootstrap Icon Class"}
+              </label>
+              <input
+                type="text"
+                className={errors.iconClass ? "input-alert" : ""}
+                placeholder={errors.iconClass ? "Icon class is required!" : "e.g. bi-shield-check"}
+                {...register("iconClass")}
+              />
             </div>
           </div>
 
           <div className="form-group">
-            <label>Description</label>
-            <textarea placeholder="Short description..."></textarea>
+            <label className={errors.description ? "label-alert" : ""}>
+              {errors.description ? "Description is required!" : "Description"}
+            </label>
+            <textarea
+              className={errors.description ? "input-alert" : ""}
+              placeholder={errors.description ? "Description is required!" : "Short description..."}
+              {...register("description")}
+            ></textarea>
           </div>
 
           <div className="form-actions">

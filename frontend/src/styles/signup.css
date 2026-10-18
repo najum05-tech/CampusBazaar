@@ -147,6 +147,21 @@
   color: #a1a7a8;
 }
 
+/* Red Alert State when Zod Validation Fails on Sign Up */
+.signup-input.input-alert {
+  border: 1.5px solid #dc3545 !important;
+  background-color: #fff5f5 !important;
+}
+
+.signup-input.input-alert i {
+  color: #dc3545 !important;
+}
+
+.signup-input.input-alert input::placeholder {
+  color: #dc3545 !important;
+  font-weight: 500;
+}
+
 
 /* Password toggle */
 
