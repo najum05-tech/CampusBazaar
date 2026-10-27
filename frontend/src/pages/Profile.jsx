@@ -82,11 +82,11 @@ return (
     </section>
 
     <nav className="profile-tabs">
-      <a href="#posts" className="active">Posts</a>
-      <a href="#about">About</a>
-      <a href="#listings">Listings</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#saved">Saved</a>
+      <Link to="#posts" className="active">Posts</Link>
+      <Link to="#about">About</Link>
+      <Link to="#listings">Listings</Link>
+      <Link to="#reviews">Reviews</Link>
+      <Link to="#saved">Saved</Link>
     </nav>
 
     <section className="profile-content" id="posts">

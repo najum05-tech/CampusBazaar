@@ -7,13 +7,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // Zod Validation Schema for Edit User Form
 const editUserSchema = z.object({
-  fullName: z.string().min(1),
-  email: z.string().min(1).email(),
-  phoneNumber: z.string().min(1),
-  role: z.string().min(1),
-  university: z.string().min(1),
-  campus: z.string().min(1),
-  status: z.string().min(1),
+  fullName: z.string().min(1, "Full Name is required"),
+  email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
+  phoneNumber: z.string().min(1, "Phone Number is required"),
+  role: z.string().min(1, "Role is required"),
+  university: z.string().min(1, "University is required"),
+  campus: z.string().min(1, "Campus is required"),
+  status: z.string().min(1, "Status is required"),
 });
 
 export default function EditUser() {
@@ -44,7 +44,7 @@ export default function EditUser() {
           <div className="form-row">
             <div className="form-group">
               <label className={errors.fullName ? "label-alert" : ""}>
-                {errors.fullName ? "Full Name is required!" : "Full Name"}
+                {errors.fullName?.message}
               </label>
               <input
                 type="text"
@@ -56,7 +56,7 @@ export default function EditUser() {
 
             <div className="form-group">
               <label className={errors.email ? "label-alert" : ""}>
-                {errors.email ? "Valid email is required!" : "Email"}
+                {errors.email?.message}
               </label>
               <input
                 type="email"
@@ -70,7 +70,7 @@ export default function EditUser() {
           <div className="form-row">
             <div className="form-group">
               <label className={errors.phoneNumber ? "label-alert" : ""}>
-                {errors.phoneNumber ? "Phone Number is required!" : "Phone Number"}
+                {errors.phoneNumber?.message}
               </label>
               <input
                 type="text"
@@ -82,7 +82,7 @@ export default function EditUser() {
 
             <div className="form-group">
               <label className={errors.role ? "label-alert" : ""}>
-                {errors.role ? "Role is required!" : "Role"}
+                {errors.role?.message}
               </label>
               <select
                 defaultValue="Seller"
@@ -99,7 +99,7 @@ export default function EditUser() {
           <div className="form-row">
             <div className="form-group">
               <label className={errors.university ? "label-alert" : ""}>
-                {errors.university ? "University is required!" : "University"}
+                {errors.university?.message}
               </label>
               <select
                 defaultValue="COMSATS University Islamabad"
@@ -114,7 +114,7 @@ export default function EditUser() {
 
             <div className="form-group">
               <label className={errors.campus ? "label-alert" : ""}>
-                {errors.campus ? "Campus is required!" : "Campus"}
+                {errors.campus?.message}
               </label>
               <select
                 defaultValue="Abbottabad Campus"
@@ -130,7 +130,7 @@ export default function EditUser() {
 
           <div className="form-group">
             <label className={errors.status ? "label-alert" : ""}>
-              {errors.status ? "Status is required!" : "Status"}
+              {errors.status?.message}
             </label>
             <select
               defaultValue="Active"

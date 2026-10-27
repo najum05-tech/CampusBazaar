@@ -10,14 +10,21 @@ import marketplaceImage from "../assets/images/signup-marketplace.png";
 // Zod Validation Schema for Sign Up
 const signupSchema = z
   .object({
-    fullName: z.string().min(1),
-    email: z.string().min(1).email(),
-    password: z.string().min(6),
-    confirmPassword: z.string().min(1),
+    fullName: z.string().min(1, "Full name is required"),
+    email: z
+      .string()
+      .min(1, "Email is required")
+      .email("Please enter a valid email address"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string().min(1, "Confirm password is required"),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-  });
+  .refine(
+    (data) => data.password === data.confirmPassword,
+    {
+      path: ["confirmPassword"],
+      message: "Passwords do not match!",
+    }
+  );
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -71,9 +78,7 @@ export default function Signup() {
               <i className="bi bi-person"></i>
               <input
                 type="text"
-                placeholder={
-                  errors.fullName ? "Full name is required!" : "Full name"
-                }
+                placeholder={errors.fullName?.message}
                 {...register("fullName")}
               />
             </div>
@@ -85,11 +90,7 @@ export default function Signup() {
               <i className="bi bi-envelope"></i>
               <input
                 type="email"
-                placeholder={
-                  errors.email
-                    ? "Valid email address is required!"
-                    : "Email address"
-                }
+                placeholder={errors.email?.message}
                 {...register("email")}
               />
             </div>
@@ -101,11 +102,7 @@ export default function Signup() {
               <i className="bi bi-lock"></i>
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder={
-                  errors.password
-                    ? "Password required (min 6 chars)!"
-                    : "Password"
-                }
+                placeholder={errors.password?.message}
                 {...register("password")}
               />
               <button
@@ -128,11 +125,7 @@ export default function Signup() {
               <i className="bi bi-lock"></i>
               <input
                 type={showConfirmPassword ? "text" : "password"}
-                placeholder={
-                  errors.confirmPassword
-                    ? "Passwords do not match!"
-                    : "Confirm password"
-                }
+                placeholder={errors.confirmPassword?.message}
                 {...register("confirmPassword")}
               />
               <button

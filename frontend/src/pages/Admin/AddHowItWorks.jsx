@@ -7,9 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // Zod Validation Schema for Add How It Works Form
 const howItWorksSchema = z.object({
-  stepTitle: z.string().min(1),
-  iconClass: z.string().min(1),
-  stepDescription: z.string().min(1),
+  stepTitle: z.string().min(1, "Step Title is required"),
+  iconClass: z.string().min(1, "Bootstrap Icon Class is required"),
+  stepDescription: z.string().min(1, "Step Description is required"),
 });
 
 export default function AddHowItWorks() {
@@ -40,7 +40,7 @@ export default function AddHowItWorks() {
           <div className="form-row">
             <div className="form-group">
               <label className={errors.stepTitle ? "label-alert" : ""}>
-                {errors.stepTitle ? "Step Title is required!" : "Step Title"}
+                {errors.stepTitle?.message}
               </label>
               <input
                 type="text"
@@ -52,7 +52,7 @@ export default function AddHowItWorks() {
 
             <div className="form-group">
               <label className={errors.iconClass ? "label-alert" : ""}>
-                {errors.iconClass ? "Bootstrap Icon Class is required!" : "Bootstrap Icon Class"}
+                {errors.iconClass?.message}
               </label>
               <input
                 type="text"
@@ -65,7 +65,7 @@ export default function AddHowItWorks() {
 
           <div className="form-group">
             <label className={errors.stepDescription ? "label-alert" : ""}>
-              {errors.stepDescription ? "Step Description is required!" : "Step Description"}
+              {errors.stepDescription?.message}
             </label>
             <textarea
               className={errors.stepDescription ? "input-alert" : ""}

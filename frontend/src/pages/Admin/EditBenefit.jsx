@@ -7,9 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // Zod Validation Schema for Edit Benefit Form
 const editBenefitSchema = z.object({
-  title: z.string().min(1),
-  iconClass: z.string().min(1),
-  description: z.string().min(1),
+  title: z.string().min(1, "Title is required"),
+  iconClass: z.string().min(1, "Bootstrap Icon Class is required"),
+  description: z.string().min(1, "Description is required"),
 });
 
 export default function EditBenefit() {
@@ -40,7 +40,7 @@ export default function EditBenefit() {
           <div className="form-row">
             <div className="form-group">
               <label className={errors.title ? "label-alert" : ""}>
-                {errors.title ? "Title is required!" : "Title"}
+                {errors.title?.message}
               </label>
               <input
                 type="text"
@@ -52,7 +52,7 @@ export default function EditBenefit() {
 
             <div className="form-group">
               <label className={errors.iconClass ? "label-alert" : ""}>
-                {errors.iconClass ? "Bootstrap Icon Class is required!" : "Bootstrap Icon Class"}
+                {errors.iconClass?.message}
               </label>
               <input
                 type="text"
@@ -65,7 +65,7 @@ export default function EditBenefit() {
 
           <div className="form-group">
             <label className={errors.description ? "label-alert" : ""}>
-              {errors.description ? "Description is required!" : "Description"}
+              {errors.description?.message}
             </label>
             <textarea
               defaultValue="Verified accounts from your campus community."

@@ -4,14 +4,15 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {handleMyLoginFunction} from "/src/api.js";
 
 // import logo from "../assets/images/logo.png";
 import campusHero from "../assets/images/campus-hero.png";
 
 // Zod Validation Schema
 const loginSchema = z.object({
-  email: z.string().min(1).email(),
-  password: z.string().min(6),
+  email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 export default function Login() {
@@ -25,8 +26,9 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
   });
 
-  const handleMySubmissionFormFunction = (data) => {
+    async function handleMyLoginFormFunction(data){
     console.log("Form submitted with data:", data);
+    await handleMyLoginFunction(data);
   };
 
   return (
@@ -55,7 +57,7 @@ export default function Login() {
 
           {/* Login Form */}
           <form
-            onSubmit={handleSubmit(handleMySubmissionFormFunction)}
+            onSubmit={handleSubmit(handleMyLoginFormFunction)}
             className="login-form"
             method="POST"
           >
@@ -69,9 +71,7 @@ export default function Login() {
               <input
                 type="email"
                 placeholder={
-                  errors.email
-                    ? "Valid email address is required!"
-                    : "Email address"
+                  errors.email?.message
                 }
                 {...register("email")}
               />
@@ -87,9 +87,7 @@ export default function Login() {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder={
-                  errors.password
-                    ? "Password is required (min 6 chars)!"
-                    : "Password"
+                  errors.password?.message                    
                 }
                 {...register("password")}
               />
@@ -105,9 +103,9 @@ export default function Login() {
             </div>
 
             {/* Forgot Password */}
-            <a href="#" className="forgot-password">
+            <Link to="#" className="forgot-password">
               Forgot password?
-            </a>
+            </Link>
 
             {/* Login Button */}
             <button type="submit" className="login-button">

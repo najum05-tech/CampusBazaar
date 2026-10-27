@@ -6,27 +6,27 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // Zod Validation Schema for General Settings Form
 const settingsSchema = z.object({
-  siteName: z.string().min(1),
-  supportEmail: z.string().min(1).email(),
-  footerTagline: z.string().min(1),
-  contactPhone: z.string().min(1),
-  defaultCity: z.string().min(1),
+  siteName: z.string().min(1, "Site Name is required"),
+  supportEmail: z.string().min(1, "Support Email is required").email("Please enter a valid email address"),
+  footerTagline: z.string().min(1, "Footer Tagline is required"),
+  contactPhone: z.string().min(1, "Contact Phone is required"),
+  defaultCity: z.string().min(1, "Default City is required"),
 });
 
 // Zod Validation Schema for Social Links Form
 const socialLinksSchema = z.object({
-  facebookUrl: z.string().min(1).url(),
-  instagramUrl: z.string().min(1).url(),
-  linkedinUrl: z.string().min(1).url(),
-  twitterUrl: z.string().min(1).url(),
+  facebookUrl: z.string().min(1, "Facebook URL is required").url("Please enter a valid URL"),
+  instagramUrl: z.string().min(1, "Instagram URL is required").url("Please enter a valid URL"),
+  linkedinUrl: z.string().min(1, "LinkedIn URL is required").url("Please enter a valid URL"),
+  twitterUrl: z.string().min(1, "Twitter / X URL is required").url("Please enter a valid URL"),
 });
 
 // Zod Validation Schema for Account Password Form
 const passwordSchema = z
   .object({
-    currentPassword: z.string().min(1),
-    newPassword: z.string().min(6),
-    confirmNewPassword: z.string().min(1),
+    currentPassword: z.string().min(1, "Current Password is required"),
+    newPassword: z.string().min(6, "New Password must be at least 6 characters"),
+    confirmNewPassword: z.string().min(1, "Confirm New Password is required"),
   })
   .refine((data) => data.newPassword === data.confirmNewPassword, {
     path: ["confirmNewPassword"],
@@ -87,7 +87,7 @@ export default function AdminSettings() {
           <div className="form-row">
             <div className="form-group">
               <label className={settingsErrors.siteName ? "label-alert" : ""}>
-                {settingsErrors.siteName ? "Site Name is required!" : "Site Name"}
+                {settingsErrors.siteName?.message}
               </label>
               <input
                 type="text"
@@ -99,7 +99,7 @@ export default function AdminSettings() {
 
             <div className="form-group">
               <label className={settingsErrors.supportEmail ? "label-alert" : ""}>
-                {settingsErrors.supportEmail ? "Valid support email is required!" : "Support Email"}
+                {settingsErrors.supportEmail?.message}
               </label>
               <input
                 type="email"
@@ -112,7 +112,7 @@ export default function AdminSettings() {
 
           <div className="form-group">
             <label className={settingsErrors.footerTagline ? "label-alert" : ""}>
-              {settingsErrors.footerTagline ? "Footer Tagline is required!" : "Footer Tagline"}
+              {settingsErrors.footerTagline?.message}
             </label>
             <input
               type="text"
@@ -126,7 +126,7 @@ export default function AdminSettings() {
 
             <div className="form-group">
               <label className={settingsErrors.contactPhone ? "label-alert" : ""}>
-                {settingsErrors.contactPhone ? "Contact Phone is required!" : "Contact Phone"}
+                {settingsErrors.contactPhone?.message}
               </label>
               <input
                 type="text"
@@ -138,7 +138,7 @@ export default function AdminSettings() {
 
             <div className="form-group">
               <label className={settingsErrors.defaultCity ? "label-alert" : ""}>
-                {settingsErrors.defaultCity ? "Default City is required!" : "Default City"}
+                {settingsErrors.defaultCity?.message}
               </label>
               <select
                 className={settingsErrors.defaultCity ? "input-alert" : ""}
@@ -174,7 +174,7 @@ export default function AdminSettings() {
           <div className="form-row">
             <div className="form-group">
               <label className={socialErrors.facebookUrl ? "label-alert" : ""}>
-                {socialErrors.facebookUrl ? "Valid Facebook URL is required!" : "Facebook URL"}
+                {socialErrors.facebookUrl?.message}
               </label>
               <input
                 type="text"
@@ -186,7 +186,7 @@ export default function AdminSettings() {
 
             <div className="form-group">
               <label className={socialErrors.instagramUrl ? "label-alert" : ""}>
-                {socialErrors.instagramUrl ? "Valid Instagram URL is required!" : "Instagram URL"}
+                {socialErrors.instagramUrl?.message}
               </label>
               <input
                 type="text"
@@ -200,7 +200,7 @@ export default function AdminSettings() {
           <div className="form-row">
             <div className="form-group">
               <label className={socialErrors.linkedinUrl ? "label-alert" : ""}>
-                {socialErrors.linkedinUrl ? "Valid LinkedIn URL is required!" : "LinkedIn URL"}
+                {socialErrors.linkedinUrl?.message}
               </label>
               <input
                 type="text"
@@ -212,7 +212,7 @@ export default function AdminSettings() {
 
             <div className="form-group">
               <label className={socialErrors.twitterUrl ? "label-alert" : ""}>
-                {socialErrors.twitterUrl ? "Valid Twitter / X URL is required!" : "Twitter / X URL"}
+                {socialErrors.twitterUrl?.message}
               </label>
               <input
                 type="text"
@@ -244,7 +244,7 @@ export default function AdminSettings() {
 
           <div className="form-group">
             <label className={passwordErrors.currentPassword ? "label-alert" : ""}>
-              {passwordErrors.currentPassword ? "Current Password is required!" : "Current Password"}
+              {passwordErrors.currentPassword?.message}
             </label>
             <input
               type="password"
@@ -257,7 +257,7 @@ export default function AdminSettings() {
           <div className="form-row">
             <div className="form-group">
               <label className={passwordErrors.newPassword ? "label-alert" : ""}>
-                {passwordErrors.newPassword ? "New Password is required (min 6 chars)!" : "New Password"}
+                {passwordErrors.newPassword?.message}
               </label>
               <input
                 type="password"
@@ -269,7 +269,7 @@ export default function AdminSettings() {
 
             <div className="form-group">
               <label className={passwordErrors.confirmNewPassword ? "label-alert" : ""}>
-                {passwordErrors.confirmNewPassword ? "Confirm New Password is required!" : "Confirm New Password"}
+                {passwordErrors.confirmNewPassword?.message}
               </label>
               <input
                 type="password"

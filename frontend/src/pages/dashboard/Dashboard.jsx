@@ -60,7 +60,7 @@ export default function Dashboard() {
           <section className="dashboard-section">
             <div className="section-top">
               <h2>Your Recent Listings</h2>
-              <a href="#">View All <i className="bi bi-arrow-right"></i></a>
+              <Link to="#">View All <i className="bi bi-arrow-right"></i></Link>
             </div>
 
            <div className="dashboard-products">
@@ -139,7 +139,7 @@ export default function Dashboard() {
           <section className="dashboard-section activity-section">
             <div className="section-top">
               <h2>Recent Activity</h2>
-              <a href="#">View All <i className="bi bi-arrow-right"></i></a>
+              <Link to="#">View All <i className="bi bi-arrow-right"></i></Link>
             </div>
 
             <div className="activity-list">

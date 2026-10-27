@@ -7,13 +7,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // Zod Validation Schema for Edit Hero Form
 const editHeroSchema = z.object({
-  smallLabel: z.string().min(1),
-  titleLine1: z.string().min(1),
-  titleLine2: z.string().min(1),
-  description: z.string().min(1),
-  primaryButtonText: z.string().min(1),
-  secondaryButtonText: z.string().min(1),
-  status: z.string().min(1),
+  smallLabel: z.string().min(1, "Small Label is required"),
+  titleLine1: z.string().min(1, "Title Line 1 is required"),
+  titleLine2: z.string().min(1, "Title Line 2 is required"),
+  description: z.string().min(1, "Description is required"),
+  primaryButtonText: z.string().min(1, "Primary Button Text is required"),
+  secondaryButtonText: z.string().min(1, "Secondary Button Text is required"),
+  status: z.string().min(1, "Status is required"),
 });
 
 export default function EditHero() {
@@ -43,7 +43,7 @@ export default function EditHero() {
 
           <div className="form-group">
             <label className={errors.smallLabel ? "label-alert" : ""}>
-              {errors.smallLabel ? "Small Label is required!" : "Small Label"}
+              {errors.smallLabel?.message}
             </label>
             <input
               type="text"
@@ -56,7 +56,7 @@ export default function EditHero() {
           <div className="form-row">
             <div className="form-group">
               <label className={errors.titleLine1 ? "label-alert" : ""}>
-                {errors.titleLine1 ? "Title Line 1 is required!" : "Title Line 1"}
+                {errors.titleLine1?.message}
               </label>
               <input
                 type="text"
@@ -68,7 +68,7 @@ export default function EditHero() {
 
             <div className="form-group">
               <label className={errors.titleLine2 ? "label-alert" : ""}>
-                {errors.titleLine2 ? "Title Line 2 is required!" : "Title Line 2 (highlighted)"}
+                {errors.titleLine2?.message}
               </label>
               <input
                 type="text"
@@ -81,7 +81,7 @@ export default function EditHero() {
 
           <div className="form-group">
             <label className={errors.description ? "label-alert" : ""}>
-              {errors.description ? "Description is required!" : "Description"}
+              {errors.description?.message}
             </label>
             <textarea
               defaultValue="Buy, sell, or exchange things with students around you — easily, safely, and all in one place."
@@ -93,7 +93,7 @@ export default function EditHero() {
           <div className="form-row">
             <div className="form-group">
               <label className={errors.primaryButtonText ? "label-alert" : ""}>
-                {errors.primaryButtonText ? "Primary Button Text is required!" : "Primary Button Text"}
+                {errors.primaryButtonText?.message}
               </label>
               <input
                 type="text"
@@ -105,7 +105,7 @@ export default function EditHero() {
 
             <div className="form-group">
               <label className={errors.secondaryButtonText ? "label-alert" : ""}>
-                {errors.secondaryButtonText ? "Secondary Button Text is required!" : "Secondary Button Text"}
+                {errors.secondaryButtonText?.message}
               </label>
               <input
                 type="text"
@@ -118,7 +118,7 @@ export default function EditHero() {
 
           <div className="form-group">
             <label className={errors.status ? "label-alert" : ""}>
-              {errors.status ? "Status is required!" : "Status"}
+              {errors.status?.message}
             </label>
             <select
               defaultValue="Active"

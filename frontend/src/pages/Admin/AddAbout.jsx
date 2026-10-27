@@ -7,12 +7,12 @@ import "../../styles/Dashboard/addproduct.css";
 
 // 1. Zod Validation Schema for Add About Form
 const aboutSchema = z.object({
-  pageTitle: z.string().min(1),
-  shortIntro: z.string().min(1),
-  ourStory: z.string().min(1),
-  mission: z.string().min(1),
-  vision: z.string().min(1),
-  values: z.string().min(1),
+  pageTitle: z.string().min(1, "Page Title is required"),
+  shortIntro: z.string().min(1, "Short Intro is required"),
+  ourStory: z.string().min(1, "Our Story is required"),
+  mission: z.string().min(1, "Mission is required"),
+  vision: z.string().min(1, "Vision is required"),
+  values: z.string().min(1, "Values are required"),
 });
 
 export default function AddAbout() {
@@ -44,7 +44,7 @@ export default function AddAbout() {
           {/* Page Title */}
           <div className="form-group">
             <label className={errors.pageTitle ? "label-alert" : ""}>
-              {errors.pageTitle ? "Page Title is required!" : "Page Title"}
+              {errors.pageTitle?.message}
             </label>
             <input
               type="text"
@@ -57,7 +57,7 @@ export default function AddAbout() {
           {/* Short Intro */}
           <div className="form-group">
             <label className={errors.shortIntro ? "label-alert" : ""}>
-              {errors.shortIntro ? "Short Intro is required!" : "Short Intro"}
+              {errors.shortIntro?.message}
             </label>
             <textarea
               className={errors.shortIntro ? "input-alert" : ""}
@@ -69,7 +69,7 @@ export default function AddAbout() {
           {/* Our Story */}
           <div className="form-group">
             <label className={errors.ourStory ? "label-alert" : ""}>
-              {errors.ourStory ? "Our Story is required!" : "Our Story"}
+              {errors.ourStory?.message}
             </label>
             <textarea
               className={errors.ourStory ? "input-alert" : ""}
@@ -81,7 +81,7 @@ export default function AddAbout() {
           {/* Mission */}
           <div className="form-group">
             <label className={errors.mission ? "label-alert" : ""}>
-              {errors.mission ? "Mission is required!" : "Mission"}
+              {errors.mission?.message}
             </label>
             <textarea
               className={errors.mission ? "input-alert" : ""}
@@ -94,7 +94,7 @@ export default function AddAbout() {
           <div className="form-row">
             <div className="form-group">
               <label className={errors.vision ? "label-alert" : ""}>
-                {errors.vision ? "Vision is required!" : "Vision"}
+                {errors.vision?.message}
               </label>
               <textarea
                 className={errors.vision ? "input-alert" : ""}
@@ -105,7 +105,7 @@ export default function AddAbout() {
 
             <div className="form-group">
               <label className={errors.values ? "label-alert" : ""}>
-                {errors.values ? "Values are required!" : "Values"}
+                {errors.values?.message}
               </label>
               <textarea
                 className={errors.values ? "input-alert" : ""}

@@ -7,9 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // Zod Validation Schema for Add Category Form
 const categorySchema = z.object({
-  categoryName: z.string().min(1),
-  iconClass: z.string().min(1),
-  status: z.string().min(1),
+  categoryName: z.string().min(1, "Category Name is required"),
+  iconClass: z.string().min(1, "Bootstrap Icon Class is required"),
+  status: z.string().min(1, "Status is required"),
 });
 
 export default function AddCategory() {
@@ -40,7 +40,7 @@ export default function AddCategory() {
           <div className="form-row">
             <div className="form-group">
               <label className={errors.categoryName ? "label-alert" : ""}>
-                {errors.categoryName ? "Category Name is required!" : "Category Name"}
+                {errors.categoryName?.message}
               </label>
               <input
                 type="text"
@@ -52,7 +52,7 @@ export default function AddCategory() {
 
             <div className="form-group">
               <label className={errors.iconClass ? "label-alert" : ""}>
-                {errors.iconClass ? "Bootstrap Icon Class is required!" : "Bootstrap Icon Class"}
+                {errors.iconClass?.message}
               </label>
               <input
                 type="text"
@@ -65,7 +65,7 @@ export default function AddCategory() {
 
           <div className="form-group">
             <label className={errors.status ? "label-alert" : ""}>
-              {errors.status ? "Status is required!" : "Status"}
+              {errors.status?.message}
             </label>
             <select
               className={errors.status ? "input-alert" : ""}
