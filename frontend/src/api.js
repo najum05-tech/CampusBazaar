@@ -9,6 +9,10 @@ export async function handleMySignupFunction(data) {
   return await axios.post('http://localhost:5000/pages/Signup', data)
 }
 
+export async function handleMyLoginFunction(data) {
+  console.log("Login request received:");
+  return await axios.post('http://localhost:5000/pages/Login', data)
+}
 
 
 export default API;

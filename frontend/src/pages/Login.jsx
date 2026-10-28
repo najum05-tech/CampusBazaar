@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {handleMyLoginFunction} from "/src/api.js";
+import { useNavigate } from "react-router-dom";
 
 // import logo from "../assets/images/logo.png";
 import campusHero from "../assets/images/campus-hero.png";
@@ -26,10 +27,21 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
   });
 
-    async function handleMyLoginFormFunction(data){
-    console.log("Form submitted with data:", data);
-    await handleMyLoginFunction(data);
-  };
+const navigate = useNavigate();
+
+async function handleMyLoginFormFunction(data) {
+    try {
+        const response = await handleMyLoginFunction(data);
+
+        if (response.status === 200 && response.data.message === 'Login successful') {
+            navigate('/');
+        }
+    } catch (error) {
+        console.error(
+            error.response?.data?.message || error.message
+        );
+    }
+}
 
   return (
     <div className="login-page">

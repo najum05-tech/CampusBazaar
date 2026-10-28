@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import { SignupController } from './Controller/SignupController.js';
 import signupRoutes from './Routes/signupRoutes.js';
+import loginRoutes from './Routes/loginRoutes.js';
 
 const app = express();
 
@@ -17,8 +18,11 @@ app.use('/pages', (req, res, next) => {
 // Signup route
 app.use('/pages', signupRoutes);
 
+// Login route
+app.use('/pages', loginRoutes);
 
-app.listen(process.env.port, () => {
+
+app.listen(process.env.port || 5000, () => {
     console.log('Server is running on port 5000');
 });
 
