@@ -4,6 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import "../styles/signup.css";
 import { Link } from "react-router-dom";
+import {handleMySignupFunction} from "/src/api.js";
 // import logo from "../assets/images/logo.png";
 import marketplaceImage from "../assets/images/signup-marketplace.png";
 
@@ -38,8 +39,9 @@ export default function Signup() {
     resolver: zodResolver(signupSchema),
   });
 
-  const handleMySubmissionFormFunction = (data) => {
+  async function handleMySubmissionFormFunction(data) {
     console.log("Form submitted with data:", data);
+    await handleMySignupFunction(data);
   };
 
   return (
