@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -16,14 +17,15 @@ app.use('/pages', (req, res, next) => {
 // Signup route
 app.use('/pages', signupRoutes);
 
-app.listen(5000, () => {
+
+app.listen(process.env.port, () => {
     console.log('Server is running on port 5000');
 });
 
 
 // Connect to MongoDB
 
-mongoose.connect("mongodb+srv://mnajmuddin110_db_user:Najum123@cluster0.brgao8v.mongodb.net/").then(()=>{
+mongoose.connect(process.env.MONGO_URI).then(()=>{
     console.log('Connected to MongoDB');
 }).catch((error)=>{
     console.error('Error connecting to MongoDB:', error);
