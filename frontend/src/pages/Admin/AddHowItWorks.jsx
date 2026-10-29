@@ -1,9 +1,12 @@
 // src/pages/Admin/AddHowItWorks.jsx
 import {Link} from "react-router-dom";
 import AdminLayout from "./AdminLayout.jsx";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { handleAddAdminContentFunction } from "/src/api.js";
 
 // Zod Validation Schema for Add How It Works Form
 const howItWorksSchema = z.object({
@@ -13,6 +16,9 @@ const howItWorksSchema = z.object({
 });
 
 export default function AddHowItWorks() {
+  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   // Connect Zod to react-hook-form
   const {
     register,
@@ -23,8 +29,16 @@ export default function AddHowItWorks() {
   });
 
   // Function to log valid submitted data
-  const handleMySubmissionFormFunction = (data) => {
-    console.log("How It Works Form submitted with data:", data);
+  const handleMySubmissionFormFunction = async (data) => {
+    setMessage("");
+    setError("");
+    try {
+      await handleAddAdminContentFunction("HowItWorks", data);
+      setMessage("Step added successfully.");
+      setTimeout(() => navigate("/admin/how-it-works"), 1000);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to add step.");
+    }
   };
 
   return (
@@ -34,6 +48,9 @@ export default function AddHowItWorks() {
 
         <h2>Add New Step</h2>
         <p>Create a new step for the "How It Works" section.</p>
+
+        {message && <p>{message}</p>}
+        {error && <p>{error}</p>}
 
         <form className="admin-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 

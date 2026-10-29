@@ -1,9 +1,11 @@
 // src/pages/admin/EditUser.jsx
-import {Link} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import AdminLayout from "../../pages/Admin/AdminLayout.jsx";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { handleGetAdminUserFunction, handleUpdateAdminUserFunction } from "/src/api.js";
 
 // Zod Validation Schema for Edit User Form
 const editUserSchema = z.object({
@@ -17,18 +19,41 @@ const editUserSchema = z.object({
 });
 
 export default function EditUser() {
+  const { id } = useParams();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
   // Connect Zod to react-hook-form
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValues,
   } = useForm({
     resolver: zodResolver(editUserSchema),
   });
 
-  // Function to log valid submitted data
-  const handleMySubmissionFormFunction = (data) => {
-    console.log("Edit User Form submitted with data:", data);
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const response = await handleGetAdminUserFunction(id);
+        setValues(response.data);
+      } catch (err) {
+        setError(err.response?.data?.message || "Unable to load user");
+      }
+    };
+    loadUser();
+  }, [id]);
+
+  const handleMySubmissionFormFunction = async (data) => {
+    setMessage("");
+    setError("");
+    try {
+      await handleUpdateAdminUserFunction(id, data);
+      setMessage("User updated successfully.");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to update user");
+    }
   };
 
   return (
@@ -39,6 +64,9 @@ export default function EditUser() {
         <h2>Edit User</h2>
         <p>Update this student's account information.</p>
 
+        {message && <p>{message}</p>}
+        {error && <p>{error}</p>}
+
         <form className="admin-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 
           <div className="form-row">
@@ -48,7 +76,6 @@ export default function EditUser() {
               </label>
               <input
                 type="text"
-                defaultValue="Muhammad Najmuddin"
                 className={errors.fullName ? "input-alert" : ""}
                 {...register("fullName")}
               />
@@ -60,7 +87,6 @@ export default function EditUser() {
               </label>
               <input
                 type="email"
-                defaultValue="najmuddin@gmail.com"
                 className={errors.email ? "input-alert" : ""}
                 {...register("email")}
               />
@@ -74,7 +100,6 @@ export default function EditUser() {
               </label>
               <input
                 type="text"
-                defaultValue="+92 346 9611585"
                 className={errors.phoneNumber ? "input-alert" : ""}
                 {...register("phoneNumber")}
               />
@@ -85,7 +110,6 @@ export default function EditUser() {
                 {errors.role?.message}
               </label>
               <select
-                defaultValue="Seller"
                 className={errors.role ? "input-alert" : ""}
                 {...register("role")}
               >
@@ -102,7 +126,6 @@ export default function EditUser() {
                 {errors.university?.message}
               </label>
               <select
-                defaultValue="COMSATS University Islamabad"
                 className={errors.university ? "input-alert" : ""}
                 {...register("university")}
               >
@@ -117,7 +140,6 @@ export default function EditUser() {
                 {errors.campus?.message}
               </label>
               <select
-                defaultValue="Abbottabad Campus"
                 className={errors.campus ? "input-alert" : ""}
                 {...register("campus")}
               >
@@ -133,7 +155,6 @@ export default function EditUser() {
               {errors.status?.message}
             </label>
             <select
-              defaultValue="Active"
               className={errors.status ? "input-alert" : ""}
               {...register("status")}
             >

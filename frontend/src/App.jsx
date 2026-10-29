@@ -73,8 +73,8 @@ export const router = createBrowserRouter([
 
     {path:"/admin/about/add" , element: <AddAbout />},
     {path:"/admin/about" , element: <ViewAbout />},
-    {path:"/admin/about/edit" , element: <EditAbout />},
-    {path:"/admin/about/delete" , element: <DeleteAbout />},
+    {path:"/admin/about/:id/edit" , element: <EditAbout />},
+    {path:"/admin/about/:id/delete" , element: <DeleteAbout />},
 
     {path:"/admin" , element: <AdminDashboard />},
     {path:"/admin/users" , element: <ManageUsers />},

@@ -1,9 +1,10 @@
 // src/pages/EditProfile.jsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/editProfile.css";
+import { handleGetProfileFunction, handleUpdateProfileFunction } from "/src/api.js";
 
 export default function EditProfile() {
   const [form, setForm] = useState({
@@ -17,14 +18,41 @@ export default function EditProfile() {
     location: "Abbottabad, Pakistan",
   });
 
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) return;
+    handleGetProfileFunction(userId).then((response) => setForm({
+      name: response.data.fullName,
+      badge: response.data.badge || "Student",
+      bio: response.data.bio || "",
+      university: response.data.university || "",
+      campus: response.data.campus || "",
+      email: response.data.email,
+      phone: response.data.phone || response.data.phoneNumber || "",
+      location: response.data.location || "",
+    })).catch((error) => console.error(error.response?.data?.message || error.message));
+  }, []);
+
   
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Updated profile:", form);
+    setMessage("");
+    setError("");
+    const userId = localStorage.getItem("userId");
+    if (!userId) return;
+    try {
+      await handleUpdateProfileFunction(userId, { ...form, fullName: form.name });
+      setMessage("Profile updated successfully.");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to update profile.");
+    }
   };
 
   return (
@@ -38,6 +66,9 @@ export default function EditProfile() {
 
           <h2 className="edit-profile-title">Edit Profile</h2>
           <p className="edit-profile-subtitle">Update your public profile information.</p>
+
+          {message && <p>{message}</p>}
+          {error && <p>{error}</p>}
 
           {/* Cover + Avatar preview */}
           <div className="edit-profile-media-card">

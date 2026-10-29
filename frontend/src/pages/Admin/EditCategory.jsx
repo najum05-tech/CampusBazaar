@@ -1,9 +1,11 @@
 // src/pages/Admin/EditCategory.jsx
-import {Link} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import AdminLayout from "./AdminLayout.jsx";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { handleGetAdminContentItemFunction, handleUpdateAdminContentFunction } from "/src/api.js";
 
 // Zod Validation Schema for Edit Category Form
 const editCategorySchema = z.object({
@@ -13,18 +15,41 @@ const editCategorySchema = z.object({
 });
 
 export default function EditCategory() {
+  const { id } = useParams();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
   // Connect Zod to react-hook-form
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValues,
   } = useForm({
     resolver: zodResolver(editCategorySchema),
   });
 
-  // Function to log valid submitted data
-  const handleMySubmissionFormFunction = (data) => {
-    console.log("Edit Category Form submitted with data:", data);
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const response = await handleGetAdminContentItemFunction("Categories", id);
+        setValues(response.data.data || response.data);
+      } catch (err) {
+        setError(err.response?.data?.message || "Unable to load content");
+      }
+    };
+    loadContent();
+  }, [id]);
+
+  const handleMySubmissionFormFunction = async (data) => {
+    setMessage("");
+    setError("");
+    try {
+      await handleUpdateAdminContentFunction("Categories", id, data);
+      setMessage("Changes saved successfully.");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to save changes.");
+    }
   };
 
   return (
@@ -35,6 +60,9 @@ export default function EditCategory() {
         <h2>Edit Category</h2>
         <p>Update this category's details.</p>
 
+        {message && <p>{message}</p>}
+        {error && <p>{error}</p>}
+
         <form className="admin-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 
           <div className="form-row">
@@ -44,7 +72,6 @@ export default function EditCategory() {
               </label>
               <input
                 type="text"
-                defaultValue="Books"
                 className={errors.categoryName ? "input-alert" : ""}
                 {...register("categoryName")}
               />
@@ -56,7 +83,6 @@ export default function EditCategory() {
               </label>
               <input
                 type="text"
-                defaultValue="bi-book"
                 className={errors.iconClass ? "input-alert" : ""}
                 {...register("iconClass")}
               />
@@ -68,7 +94,6 @@ export default function EditCategory() {
               {errors.status?.message}
             </label>
             <select
-              defaultValue="Active"
               className={errors.status ? "input-alert" : ""}
               {...register("status")}
             >

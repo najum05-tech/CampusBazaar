@@ -1,9 +1,18 @@
 // src/pages/Dashboard/Dashboard.jsx
 import DashboardLayout from "../../pages/dashboard/DashboardLayout.jsx";
 import { Link } from "react-router-dom";
-import { products } from "../../data/products";
+import { useEffect, useState } from "react";
+import { handleGetProductsFunction } from "/src/api.js";
 
 export default function Dashboard() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    handleGetProductsFunction()
+      .then((response) => setProducts(response.data))
+      .catch((error) => console.error(error.response?.data?.message || error.message));
+  }, []);
+
   return (
     <DashboardLayout activePage="dashboard">
 
@@ -66,13 +75,13 @@ export default function Dashboard() {
            <div className="dashboard-products">
 
   {products.slice(0, 4).map((product) => (
-    <div className="dashboard-product" key={product.id}>
+    <div className="dashboard-product" key={product._id}>
 
       <div className="dashboard-product-image">
-        <img src={product.image} alt={product.title} />
+        {product.images?.[0] && <img src={product.images[0]} alt={product.title} />}
 
         <Link
-          to={`/dashboard/product/${product.id}`}
+          to={`/dashboard/product/${product._id}`}
           className="product-more"
         >
           <i className="bi bi-three-dots"></i>
@@ -90,7 +99,7 @@ export default function Dashboard() {
         <div className="product-views">
           <span>
             <i className="bi bi-eye"></i>
-            {28 + product.id * 4} views
+            0 views
           </span>
         </div>
 
@@ -103,21 +112,21 @@ export default function Dashboard() {
           <div className="listing-actions">
 
             <Link
-              to={`/dashboard/product/${product.id}`}
+              to={`/dashboard/product/${product._id}`}
               title="View Product"
             >
               <i className="bi bi-eye"></i>
             </Link>
 
             <Link
-              to={`/dashboard/product/${product.id}/edit`}
+              to={`/dashboard/product/${product._id}/edit`}
               title="Edit Product"
             >
               <i className="bi bi-pencil"></i>
             </Link>
 
             <Link
-              to={`/dashboard/product/${product.id}/delete`}
+              to={`/dashboard/product/${product._id}/delete`}
               title="Delete Product"
               className="delete-action"
             >

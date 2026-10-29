@@ -1,9 +1,12 @@
 // src/pages/Admin/AddBenefit.jsx
 import {Link} from "react-router-dom";
 import AdminLayout from "./AdminLayout.jsx";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { handleAddAdminContentFunction } from "/src/api.js";
 
 // Zod Validation Schema for Add Benefit Form
 const benefitSchema = z.object({
@@ -13,6 +16,9 @@ const benefitSchema = z.object({
 });
 
 export default function AddBenefit() {
+  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   // Connect Zod to react-hook-form
   const {
     register,
@@ -23,8 +29,16 @@ export default function AddBenefit() {
   });
 
   // Function to log valid submitted data
-  const handleMySubmissionFormFunction = (data) => {
-    console.log("Benefit Form submitted with data:", data);
+  const handleMySubmissionFormFunction = async (data) => {
+    setMessage("");
+    setError("");
+    try {
+      await handleAddAdminContentFunction("Benefits", data);
+      setMessage("Benefit added successfully.");
+      setTimeout(() => navigate("/admin/benefits"), 1000);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to add benefit.");
+    }
   };
 
   return (
@@ -34,6 +48,9 @@ export default function AddBenefit() {
 
         <h2>Add New Benefit</h2>
         <p>Create a new item for the "Why CampusBazaar" section.</p>
+
+        {message && <p>{message}</p>}
+        {error && <p>{error}</p>}
 
         <form className="admin-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 

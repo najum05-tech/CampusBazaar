@@ -28,18 +28,21 @@ export default function Login() {
   });
 
 const navigate = useNavigate();
+const [loginError, setLoginError] = useState("");
 
 async function handleMyLoginFormFunction(data) {
+    setLoginError("");
     try {
         const response = await handleMyLoginFunction(data);
 
         if (response.status === 200 && response.data.message === 'Login successful') {
+            localStorage.setItem('userId', response.data.user.id);
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('role', response.data.user.role);
             navigate('/');
         }
     } catch (error) {
-        console.error(
-            error.response?.data?.message || error.message
-        );
+        setLoginError(error.response?.data?.message || 'Invalid email or password');
     }
 }
 
@@ -118,6 +121,8 @@ async function handleMyLoginFormFunction(data) {
             <Link to="#" className="forgot-password">
               Forgot password?
             </Link>
+
+            {loginError && <p>{loginError}</p>}
 
             {/* Login Button */}
             <button type="submit" className="login-button">

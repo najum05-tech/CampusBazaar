@@ -5,24 +5,59 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import DashboardLayout from "../../pages/dashboard/DashboardLayout.jsx";
 import "../../styles/Dashboard/addproduct.css";
+import {handleMyAddProductFunction} from "/src/api.js";
+import { useNavigate } from "react-router-dom";
 
 // Zod Validation Schema for Add Product Form
 const productSchema = z.object({
   title: z.string().min(1, "Product title is required"),
-  category: z.string().min(1, "Category is required"),
-  condition: z.string().min(1, "Condition is required"),
-  listingType: z.string().min(1, "Listing type is required"),
+
+  category: z.enum(
+    ["Books", "Electronics", "Furniture", "Notes"],
+    { error: "Please select a category" }
+  ),
+
+  condition: z.enum(
+    ["New", "Like New", "Used"],
+    { error: "Please select a condition" }
+  ),
+
+  listingType: z.enum(
+    ["Sell", "Exchange"],
+    { error: "Please select a listing type" }
+  ),
+
   price: z.coerce.number().min(0, "Price must be a valid number"),
-  city: z.string().min(1, "City is required"),
-  university: z.string().min(1, "University is required"),
-  campus: z.string().min(1, "Campus is required"),
+
+  city: z.enum(
+    ["Abbottabad", "Islamabad", "Lahore", "Karachi"],
+    { error: "Please select a city" }
+  ),
+
+  university: z.enum(
+    [
+      "COMSATS University Islamabad",
+      "University of Abbottabad",
+      "Other"
+    ],
+    { error: "Please select a university" }
+  ),
+
+  campus: z.enum(
+    ["Abbottabad Campus", "Islamabad Campus", "Other"],
+    { error: "Please select a campus" }
+  ),
+
   location: z.string().min(1, "Location is required"),
+
   description: z.string().min(1, "Description is required"),
-  images: z.any().refine((files) => files && files.length > 0, "At least one image is required"),
+
 });
+
 
 export default function AddProduct() {
   const [images, setImages] = useState([]);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -36,9 +71,23 @@ export default function AddProduct() {
     setImages([...e.target.files]);
   };
 
-  const onSubmit = (data) => {
-    console.log("Product data:", data);
-  };
+  async function handleMySubmissionFormFunction(data) {
+    try {
+        const imageData = await Promise.all(
+          images.map((image) => new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.readAsDataURL(image);
+          }))
+        );
+        await handleMyAddProductFunction({ ...data, images: imageData });
+        navigate("/dashboard/listings");
+    } catch (error) {
+        console.error(
+            error.response?.data?.message || error.message
+        );
+    }
+}
 
   return (
     <DashboardLayout activePage="add-product">
@@ -48,7 +97,7 @@ export default function AddProduct() {
         <h1>Add New Product</h1>
         <p>List an item for other students to discover.</p>
 
-        <form className="product-form" onSubmit={handleSubmit(onSubmit)}>
+        <form className="product-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 
           <div className="form-group">
             <label>Product Title</label>

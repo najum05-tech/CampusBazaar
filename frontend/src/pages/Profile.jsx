@@ -1,11 +1,24 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { products } from "../data/products";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/profile.css";
+import { handleGetProfileFunction } from "/src/api.js";
 
 export default function Profile() {
-const user = {
+const [profile, setProfile] = useState(null);
+const user = profile ? {
+name: profile.fullName,
+initials: profile.fullName?.split(" ").map((item) => item[0]).join(""),
+university: profile.university,
+campus: profile.campus,
+location: profile.location,
+bio: profile.bio,
+email: profile.email,
+phone: profile.phone || profile.phoneNumber,
+badge: profile.badge || "Student",
+} : {
 name: "Muhammad Najmuddin",
 initials: "MN",
 university: "COMSATS University Islamabad",
@@ -15,6 +28,12 @@ bio: "Student marketplace enthusiast · Buy. Sell. Connect.",
 email: "[najmuddin@gmail.com](mailto:najmuddin@gmail.com)",
 phone: "+92 300 1234567",
 };
+
+useEffect(() => {
+  const userId = localStorage.getItem("userId");
+  if (!userId) return;
+  handleGetProfileFunction(userId).then((response) => setProfile(response.data)).catch((error) => console.error(error.response?.data?.message || error.message));
+}, []);
 
 return ( 
 

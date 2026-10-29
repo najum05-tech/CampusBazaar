@@ -1,9 +1,12 @@
 // src/pages/admin/AddUser.jsx
 import {Link} from "react-router-dom";
 import AdminLayout from "../../pages/Admin/AdminLayout.jsx";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { handleAdminUserFunction } from "/src/api.js";
 
 // Zod Validation Schema for Add User Form
 const addUserSchema = z.object({
@@ -18,6 +21,10 @@ const addUserSchema = z.object({
 });
 
 export default function AddUser() {
+  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
   // Connect Zod to react-hook-form
   const {
     register,
@@ -28,8 +35,16 @@ export default function AddUser() {
   });
 
   // Function to log valid submitted data
-  const handleMySubmissionFormFunction = (data) => {
-    console.log("Add User Form submitted with data:", data);
+  const handleMySubmissionFormFunction = async (data) => {
+    setMessage("");
+    setError("");
+    try {
+      await handleAdminUserFunction(data);
+      setMessage("User added successfully.");
+      setTimeout(() => navigate("/admin/users"), 1000);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to add user");
+    }
   };
 
   return (
@@ -39,6 +54,9 @@ export default function AddUser() {
 
         <h2>Add New User</h2>
         <p>Create a new student account manually.</p>
+
+        {message && <p>{message}</p>}
+        {error && <p>{error}</p>}
 
         <form className="admin-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 

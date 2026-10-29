@@ -5,6 +5,10 @@ import cors from 'cors';
 import { SignupController } from './Controller/SignupController.js';
 import signupRoutes from './Routes/signupRoutes.js';
 import loginRoutes from './Routes/loginRoutes.js';
+import productRoutes from './Routes/productRoutes.js';
+import profileRoutes from './Routes/profileRoutes.js';
+import contactRoutes from './Routes/contactRoutes.js';
+import adminRoutes from './Routes/adminRoutes.js';
 
 const app = express();
 
@@ -20,6 +24,12 @@ app.use('/pages', signupRoutes);
 
 // Login route
 app.use('/pages', loginRoutes);
+
+// Add Product route
+app.use('/pages', productRoutes);
+app.use('/pages', profileRoutes);
+app.use('/pages', contactRoutes);
+app.use('/pages', adminRoutes);
 
 
 app.listen(process.env.port || 5000, () => {

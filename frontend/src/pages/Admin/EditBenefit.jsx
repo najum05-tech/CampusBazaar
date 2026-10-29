@@ -1,9 +1,11 @@
 // src/pages/Admin/EditBenefit.jsx
-import {Link} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import AdminLayout from "./AdminLayout.jsx";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { handleGetAdminContentItemFunction, handleUpdateAdminContentFunction } from "/src/api.js";
 
 // Zod Validation Schema for Edit Benefit Form
 const editBenefitSchema = z.object({
@@ -13,18 +15,41 @@ const editBenefitSchema = z.object({
 });
 
 export default function EditBenefit() {
+  const { id } = useParams();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
   // Connect Zod to react-hook-form
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValues,
   } = useForm({
     resolver: zodResolver(editBenefitSchema),
   });
 
-  // Function to log valid submitted data
-  const handleMySubmissionFormFunction = (data) => {
-    console.log("Edit Benefit Form submitted with data:", data);
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const response = await handleGetAdminContentItemFunction("Benefits", id);
+        setValues(response.data.data || response.data);
+      } catch (err) {
+        setError(err.response?.data?.message || "Unable to load content");
+      }
+    };
+    loadContent();
+  }, [id]);
+
+  const handleMySubmissionFormFunction = async (data) => {
+    setMessage("");
+    setError("");
+    try {
+      await handleUpdateAdminContentFunction("Benefits", id, data);
+      setMessage("Changes saved successfully.");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to save changes.");
+    }
   };
 
   return (
@@ -35,6 +60,9 @@ export default function EditBenefit() {
         <h2>Edit Benefit</h2>
         <p>Update this benefit's details.</p>
 
+        {message && <p>{message}</p>}
+        {error && <p>{error}</p>}
+
         <form className="admin-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 
           <div className="form-row">
@@ -44,7 +72,6 @@ export default function EditBenefit() {
               </label>
               <input
                 type="text"
-                defaultValue="Student Only"
                 className={errors.title ? "input-alert" : ""}
                 {...register("title")}
               />
@@ -56,7 +83,6 @@ export default function EditBenefit() {
               </label>
               <input
                 type="text"
-                defaultValue="bi-mortarboard"
                 className={errors.iconClass ? "input-alert" : ""}
                 {...register("iconClass")}
               />
@@ -68,7 +94,6 @@ export default function EditBenefit() {
               {errors.description?.message}
             </label>
             <textarea
-              defaultValue="Verified accounts from your campus community."
               className={errors.description ? "input-alert" : ""}
               {...register("description")}
             ></textarea>

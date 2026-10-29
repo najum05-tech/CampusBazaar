@@ -1,9 +1,11 @@
 // src/pages/Admin/EditHowItWorks.jsx
-import {Link} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import AdminLayout from "./AdminLayout.jsx";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { handleGetAdminContentItemFunction, handleUpdateAdminContentFunction } from "/src/api.js";
 
 // Zod Validation Schema for Edit How It Works Form
 const editHowItWorksSchema = z.object({
@@ -13,18 +15,41 @@ const editHowItWorksSchema = z.object({
 });
 
 export default function EditHowItWorks() {
+  const { id } = useParams();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
   // Connect Zod to react-hook-form
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValues,
   } = useForm({
     resolver: zodResolver(editHowItWorksSchema),
   });
 
-  // Function to log valid submitted data
-  const handleMySubmissionFormFunction = (data) => {
-    console.log("Edit How It Works Form submitted with data:", data);
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const response = await handleGetAdminContentItemFunction("HowItWorks", id);
+        setValues(response.data.data || response.data);
+      } catch (err) {
+        setError(err.response?.data?.message || "Unable to load content");
+      }
+    };
+    loadContent();
+  }, [id]);
+
+  const handleMySubmissionFormFunction = async (data) => {
+    setMessage("");
+    setError("");
+    try {
+      await handleUpdateAdminContentFunction("HowItWorks", id, data);
+      setMessage("Changes saved successfully.");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to save changes.");
+    }
   };
 
   return (
@@ -35,6 +60,9 @@ export default function EditHowItWorks() {
         <h2>Edit Step</h2>
         <p>Update this step's details.</p>
 
+        {message && <p>{message}</p>}
+        {error && <p>{error}</p>}
+
         <form className="admin-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 
           <div className="form-row">
@@ -44,7 +72,6 @@ export default function EditHowItWorks() {
               </label>
               <input
                 type="text"
-                defaultValue="Find"
                 className={errors.stepTitle ? "input-alert" : ""}
                 {...register("stepTitle")}
               />
@@ -56,7 +83,6 @@ export default function EditHowItWorks() {
               </label>
               <input
                 type="text"
-                defaultValue="bi-search"
                 className={errors.iconClass ? "input-alert" : ""}
                 {...register("iconClass")}
               />
@@ -68,7 +94,6 @@ export default function EditHowItWorks() {
               {errors.stepDescription?.message}
             </label>
             <textarea
-              defaultValue="Search or browse listings from students near you."
               className={errors.stepDescription ? "input-alert" : ""}
               {...register("stepDescription")}
             ></textarea>

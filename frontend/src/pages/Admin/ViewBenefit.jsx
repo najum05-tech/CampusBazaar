@@ -1,8 +1,41 @@
 // src/pages/Admin/ViewBenefit.jsx
+import { useEffect, useState } from "react";
 import AdminLayout from "./AdminLayout.jsx";
-import {Link} from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { handleGetAdminContentItemFunction } from "/src/api.js";
 
 export default function ViewBenefit() {
+  const { id } = useParams();
+  const [benefit, setBenefit] = useState(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    handleGetAdminContentItemFunction("Benefits", id)
+      .then((response) => setBenefit(response.data))
+      .catch((err) => setError(err.response?.data?.message || "Unable to load content"));
+  }, [id]);
+
+  if (error) {
+    return (
+      <AdminLayout activePage="benefits">
+        <section className="admin-form-card">
+          <p>{error}</p>
+          <Link to="/admin/benefits" className="btn-admin btn-admin-outline">Back to List</Link>
+        </section>
+      </AdminLayout>
+    );
+  }
+
+  if (!benefit) {
+    return (
+      <AdminLayout activePage="benefits">
+        <section className="admin-form-card"><p>Loading benefit...</p></section>
+      </AdminLayout>
+    );
+  }
+
+  const d = benefit.data || benefit;
+
   return (
     <AdminLayout activePage="benefits">
 
@@ -14,7 +47,7 @@ export default function ViewBenefit() {
             <p>Read-only details of this benefit.</p>
           </div>
 
-          <Link to="/admin/benefits/edit/1" className="btn-admin btn-admin-primary">
+          <Link to={`/admin/benefits/${benefit._id}/edit`} className="btn-admin btn-admin-primary">
             <i className="bi bi-pencil"></i>
             Edit
           </Link>
@@ -25,20 +58,18 @@ export default function ViewBenefit() {
           <div className="admin-view-row">
             <span className="admin-view-label">Icon</span>
             <span className="admin-view-value">
-              <i className="bi bi-mortarboard admin-table-icon"></i>
+              <i className={`bi ${d.iconClass} admin-table-icon`}></i>
             </span>
           </div>
 
           <div className="admin-view-row">
             <span className="admin-view-label">Title</span>
-            <span className="admin-view-value">Student Only</span>
+            <span className="admin-view-value">{d.title}</span>
           </div>
 
           <div className="admin-view-row">
             <span className="admin-view-label">Description</span>
-            <span className="admin-view-value">
-              Verified accounts from your campus community.
-            </span>
+            <span className="admin-view-value">{d.description}</span>
           </div>
 
         </div>

@@ -1,15 +1,39 @@
 // src/pages/admin/ManageUsers.jsx
-import {Link} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import AdminLayout from "../../pages/Admin/AdminLayout.jsx";
-
-const users = [
-  { id: 1, name: "Muhammad Najmuddin", email: "najmuddin@gmail.com", role: "Seller", status: "Active", joined: "Jan 2026" },
-  { id: 2, name: "Ahmed Khan", email: "ahmed.khan@gmail.com", role: "Buyer", status: "Active", joined: "Feb 2026" },
-  { id: 3, name: "Sara Ali", email: "sara.ali@gmail.com", role: "Seller", status: "Suspended", joined: "Mar 2026" },
-  { id: 4, name: "Bilal Hussain", email: "bilal.h@gmail.com", role: "Buyer", status: "Active", joined: "Apr 2026" },
-];
+import { handleAdminUsersFunction, handleDeleteAdminUserFunction } from "/src/api.js";
 
 export default function ManageUsers() {
+  const [users, setUsers] = useState([]);
+  const [message, setMessage] = useState("");
+
+  const loadUsers = async () => {
+    try {
+      const response = await handleAdminUsersFunction();
+      setUsers(response.data);
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Unable to load users");
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      await loadUsers();
+    })();
+  }, []);
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    try {
+      await handleDeleteAdminUserFunction(id);
+      setMessage("User deleted successfully.");
+      await loadUsers();
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Unable to delete user");
+    }
+  };
+
   return (
     <AdminLayout activePage="users">
 
@@ -27,6 +51,8 @@ export default function ManageUsers() {
           </Link>
         </div>
 
+        {message && <p>{message}</p>}
+
         <table className="admin-table">
           <thead>
             <tr>
@@ -41,8 +67,8 @@ export default function ManageUsers() {
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.name}</td>
+              <tr key={user._id}>
+                <td>{user.fullName}</td>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
                 <td>
@@ -50,17 +76,18 @@ export default function ManageUsers() {
                     {user.status}
                   </span>
                 </td>
-                <td>{user.joined}</td>
+                <td>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "-"}</td>
                 <td>
-                  <Link to={`/admin/users/edit/${user.id}`} className="icon-btn">
+                  <Link to={`/admin/users/edit/${user._id}`} className="icon-btn">
                     <i className="bi bi-pencil"></i>
                   </Link>
-                  <button className="icon-btn danger">
+                  <button className="icon-btn danger" onClick={() => handleDelete(user._id)}>
                     <i className="bi bi-trash"></i>
                   </button>
                 </td>
               </tr>
             ))}
+            {users.length === 0 && <tr><td colSpan="6" className="admin-table-empty">No users found.</td></tr>}
           </tbody>
         </table>
 

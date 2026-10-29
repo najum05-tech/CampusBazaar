@@ -1,9 +1,12 @@
 // src/pages/Admin/AddAbout.jsx
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AdminLayout from "../Admin/AdminLayout.jsx";
 import "../../styles/Dashboard/addproduct.css";
+import { useNavigate } from "react-router-dom";
+import { handleAddAdminContentFunction } from "/src/api.js";
 
 // 1. Zod Validation Schema for Add About Form
 const aboutSchema = z.object({
@@ -16,6 +19,9 @@ const aboutSchema = z.object({
 });
 
 export default function AddAbout() {
+  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   // 2. Connect Zod to react-hook-form
   const {
     register,
@@ -26,8 +32,16 @@ export default function AddAbout() {
   });
 
   // 3. Function to log valid submitted data
-  const handleMySubmissionFormFunction = (data) => {
-    console.log("About Form submitted with data:", data);
+  const handleMySubmissionFormFunction = async (data) => {
+    setMessage("");
+    setError("");
+    try {
+      await handleAddAdminContentFunction("About", data);
+      setMessage("About content added successfully.");
+      setTimeout(() => navigate("/admin/about"), 1000);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to add about content.");
+    }
   };
 
   return (
@@ -35,6 +49,9 @@ export default function AddAbout() {
       <section className="product-form-card">
         <h1>Add About Content</h1>
         <p>Create content for the About Us page.</p>
+
+        {message && <p>{message}</p>}
+        {error && <p>{error}</p>}
 
         <form
           className="product-form"

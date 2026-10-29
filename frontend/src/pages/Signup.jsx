@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import "../styles/signup.css";
 import { Link } from "react-router-dom";
 import {handleMySignupFunction} from "/src/api.js";
+import { useNavigate } from 'react-router-dom';
 // import logo from "../assets/images/logo.png";
 import marketplaceImage from "../assets/images/signup-marketplace.png";
 
@@ -39,9 +40,18 @@ export default function Signup() {
     resolver: zodResolver(signupSchema),
   });
 
+  const navigate = useNavigate();
+
   async function handleMySubmissionFormFunction(data) {
     console.log("Form submitted with data:", data);
-    await handleMySignupFunction(data);
+     try {
+        await handleMySignupFunction(data);
+        navigate('/login');
+    } catch (error) {
+        console.error(
+            error.response?.data?.message || error.message
+        );
+    }
   };
 
   return (

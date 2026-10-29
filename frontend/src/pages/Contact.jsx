@@ -2,8 +2,27 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer.jsx";
 import "../styles/contact.css";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { handleContactFunction } from "/src/api.js";
 
 export default function Contact() {
+  const { register, handleSubmit, reset } = useForm();
+  const [contactMessage, setContactMessage] = useState("");
+  const [contactError, setContactError] = useState("");
+
+  const handleMySubmissionFormFunction = async (data) => {
+    setContactMessage("");
+    setContactError("");
+    try {
+      await handleContactFunction(data);
+      setContactMessage("Message sent successfully.");
+      reset();
+    } catch (error) {
+      setContactError(error.response?.data?.message || "Failed to send message. Please try again.");
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -78,28 +97,31 @@ export default function Contact() {
                 <h2>Send us a message</h2>
                 <p>Fill out the form and we will get back to you soon.</p>
 
-                <form className="contact-form">
+                {contactMessage && <p>{contactMessage}</p>}
+                {contactError && <p>{contactError}</p>}
+
+                <form className="contact-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 
                   <div className="form-row">
                     <div className="form-group">
                       <label>Full Name</label>
-                      <input type="text" placeholder="Your full name" />
+                      <input type="text" placeholder="Your full name" {...register("fullName", { required: true })} />
                     </div>
 
                     <div className="form-group">
                       <label>Email Address</label>
-                      <input type="email" placeholder="you@example.com" />
+                      <input type="email" placeholder="you@example.com" {...register("email", { required: true })} />
                     </div>
                   </div>
 
                   <div className="form-group">
                     <label>Subject</label>
-                    <input type="text" placeholder="How can we help?" />
+                    <input type="text" placeholder="How can we help?" {...register("subject", { required: true })} />
                   </div>
 
                   <div className="form-group">
                     <label>Message</label>
-                    <textarea placeholder="Write your message here..."></textarea>
+                    <textarea placeholder="Write your message here..." {...register("message", { required: true })}></textarea>
                   </div>
 
                   <button type="submit" className="contact-submit-btn">

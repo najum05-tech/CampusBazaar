@@ -1,11 +1,13 @@
 // src/pages/Admin/EditAbout.jsx
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import AdminLayout from "../Admin/AdminLayout.jsx";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import "../../styles/Dashboard/addproduct.css";
 import "../../styles/Dashboard/product-actions.css";
+import { handleGetAdminContentItemFunction, handleUpdateAdminContentFunction } from "/src/api.js";
 
 // Zod Validation Schema for Edit About Form
 const editAboutSchema = z.object({
@@ -18,18 +20,41 @@ const editAboutSchema = z.object({
 });
 
 export default function EditAbout() {
+  const { id } = useParams();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
   // Connect Zod to react-hook-form
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValues,
   } = useForm({
     resolver: zodResolver(editAboutSchema),
   });
 
-  // Function to log valid submitted data
-  const handleMySubmissionFormFunction = (data) => {
-    console.log("Edit About Form submitted with data:", data);
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const response = await handleGetAdminContentItemFunction("About", id);
+        setValues(response.data.data || response.data);
+      } catch (err) {
+        setError(err.response?.data?.message || "Unable to load content");
+      }
+    };
+    loadContent();
+  }, [id]);
+
+  const handleMySubmissionFormFunction = async (data) => {
+    setMessage("");
+    setError("");
+    try {
+      await handleUpdateAdminContentFunction("About", id, data);
+      setMessage("Changes saved successfully.");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to save changes.");
+    }
   };
 
   return (
@@ -52,6 +77,9 @@ export default function EditAbout() {
 
         <section className="product-form-card">
 
+        {message && <p>{message}</p>}
+        {error && <p>{error}</p>}
+
           <form className="product-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 
             <div className="form-group">
@@ -60,7 +88,6 @@ export default function EditAbout() {
               </label>
               <input
                 type="text"
-                defaultValue="Who We Are"
                 className={errors.pageTitle ? "input-alert" : ""}
                 {...register("pageTitle")}
               />
@@ -71,7 +98,6 @@ export default function EditAbout() {
                 {errors.shortIntro?.message}
               </label>
               <textarea
-                defaultValue="CampusBazaar is a student marketplace built for campus life — buy, sell and exchange with people from your university."
                 className={errors.shortIntro ? "input-alert" : ""}
                 {...register("shortIntro")}
               ></textarea>
@@ -82,7 +108,6 @@ export default function EditAbout() {
                 {errors.ourStory?.message}
               </label>
               <textarea
-                defaultValue="We started CampusBazaar to make campus trading simple and safe. Textbooks, electronics, furniture and notes should move easily between students."
                 className={errors.ourStory ? "input-alert" : ""}
                 {...register("ourStory")}
               ></textarea>
@@ -93,7 +118,6 @@ export default function EditAbout() {
                 {errors.mission?.message}
               </label>
               <textarea
-                defaultValue="Help students save money and reduce waste by making it easy to buy and sell within their own campus."
                 className={errors.mission ? "input-alert" : ""}
                 {...register("mission")}
               ></textarea>
@@ -105,7 +129,6 @@ export default function EditAbout() {
                   {errors.vision?.message}
                 </label>
                 <textarea
-                  defaultValue="A trusted marketplace in every campus — where students connect, trade and support each other."
                   className={errors.vision ? "input-alert" : ""}
                   {...register("vision")}
                 ></textarea>
@@ -116,7 +139,6 @@ export default function EditAbout() {
                   {errors.values?.message}
                 </label>
                 <textarea
-                  defaultValue="Community, affordability, honesty and simplicity."
                   className={errors.values ? "input-alert" : ""}
                   {...register("values")}
                 ></textarea>

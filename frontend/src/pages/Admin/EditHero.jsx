@@ -1,9 +1,11 @@
 // src/pages/admin/EditHero.jsx
-import {Link} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import AdminLayout from "../../pages/Admin/AdminLayout.jsx";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { handleGetAdminContentItemFunction, handleUpdateAdminContentFunction } from "/src/api.js";
 
 // Zod Validation Schema for Edit Hero Form
 const editHeroSchema = z.object({
@@ -17,18 +19,41 @@ const editHeroSchema = z.object({
 });
 
 export default function EditHero() {
+  const { id } = useParams();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
   // Connect Zod to react-hook-form
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValues,
   } = useForm({
     resolver: zodResolver(editHeroSchema),
   });
 
-  // Function to log valid submitted data
-  const handleMySubmissionFormFunction = (data) => {
-    console.log("Edit Hero Form submitted with data:", data);
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const response = await handleGetAdminContentItemFunction("Hero", id);
+        setValues(response.data.data || response.data);
+      } catch (err) {
+        setError(err.response?.data?.message || "Unable to load content");
+      }
+    };
+    loadContent();
+  }, [id]);
+
+  const handleMySubmissionFormFunction = async (data) => {
+    setMessage("");
+    setError("");
+    try {
+      await handleUpdateAdminContentFunction("Hero", id, data);
+      setMessage("Changes saved successfully.");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to save changes.");
+    }
   };
 
   return (
@@ -39,6 +64,9 @@ export default function EditHero() {
         <h2>Edit Hero Content</h2>
         <p>Update the existing homepage hero section.</p>
 
+        {message && <p>{message}</p>}
+        {error && <p>{error}</p>}
+
         <form className="admin-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 
           <div className="form-group">
@@ -47,7 +75,6 @@ export default function EditHero() {
             </label>
             <input
               type="text"
-              defaultValue="BUY • SELL • EXCHANGE • CONNECT"
               className={errors.smallLabel ? "input-alert" : ""}
               {...register("smallLabel")}
             />
@@ -60,7 +87,6 @@ export default function EditHero() {
               </label>
               <input
                 type="text"
-                defaultValue="Your Campus."
                 className={errors.titleLine1 ? "input-alert" : ""}
                 {...register("titleLine1")}
               />
@@ -72,7 +98,6 @@ export default function EditHero() {
               </label>
               <input
                 type="text"
-                defaultValue="Your Marketplace."
                 className={errors.titleLine2 ? "input-alert" : ""}
                 {...register("titleLine2")}
               />
@@ -84,7 +109,6 @@ export default function EditHero() {
               {errors.description?.message}
             </label>
             <textarea
-              defaultValue="Buy, sell, or exchange things with students around you — easily, safely, and all in one place."
               className={errors.description ? "input-alert" : ""}
               {...register("description")}
             ></textarea>
@@ -97,7 +121,6 @@ export default function EditHero() {
               </label>
               <input
                 type="text"
-                defaultValue="Explore Marketplace"
                 className={errors.primaryButtonText ? "input-alert" : ""}
                 {...register("primaryButtonText")}
               />
@@ -109,7 +132,6 @@ export default function EditHero() {
               </label>
               <input
                 type="text"
-                defaultValue="Sell an Item"
                 className={errors.secondaryButtonText ? "input-alert" : ""}
                 {...register("secondaryButtonText")}
               />
@@ -121,7 +143,6 @@ export default function EditHero() {
               {errors.status?.message}
             </label>
             <select
-              defaultValue="Active"
               className={errors.status ? "input-alert" : ""}
               {...register("status")}
             >

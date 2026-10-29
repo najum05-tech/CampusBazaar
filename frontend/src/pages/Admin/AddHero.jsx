@@ -1,9 +1,12 @@
 // src/pages/admin/AddHero.jsx
 import {Link} from "react-router-dom";
 import AdminLayout from "../../pages/Admin/AdminLayout.jsx";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { handleAddAdminContentFunction } from "/src/api.js";
 
 // Zod Validation Schema for Add Hero Form
 const heroSchema = z.object({
@@ -17,6 +20,9 @@ const heroSchema = z.object({
 });
 
 export default function AddHero() {
+  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   // Connect Zod to react-hook-form
   const {
     register,
@@ -27,8 +33,16 @@ export default function AddHero() {
   });
 
   // Function to log valid submitted data
-  const handleMySubmissionFormFunction = (data) => {
-    console.log("Hero Form submitted with data:", data);
+  const handleMySubmissionFormFunction = async (data) => {
+    setMessage("");
+    setError("");
+    try {
+      await handleAddAdminContentFunction("Hero", data);
+      setMessage("Hero content added successfully.");
+      setTimeout(() => navigate("/admin/hero"), 1000);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to add hero content.");
+    }
   };
 
   return (
@@ -38,6 +52,9 @@ export default function AddHero() {
 
         <h2>Add Hero Content</h2>
         <p>Create new content for the homepage hero section.</p>
+
+        {message && <p>{message}</p>}
+        {error && <p>{error}</p>}
 
         <form className="admin-form" onSubmit={handleSubmit(handleMySubmissionFormFunction)}>
 
