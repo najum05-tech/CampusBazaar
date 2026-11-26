@@ -1,0 +1,155 @@
+
+/* =================================
+   BROWSE PAGE
+================================= */
+
+.browse-page {
+  min-height: 70vh;
+  padding: 50px 0 75px;
+  background: #faf9f6;
+}
+
+/* Heading */
+
+.browse-heading {
+  margin-bottom: 38px;
+}
+
+.browse-label {
+  display: inline-block;
+  color: #236b66;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+
+.browse-heading h1 {
+  margin: 0 0 10px;
+  color: #172027;
+  font-size: 34px;
+  font-weight: 750;
+  letter-spacing: -1px;
+}
+
+.browse-heading p {
+  margin: 0;
+  color: #687477;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Results heading */
+
+.browse-results {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.browse-results h5 {
+  color: #172027;
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.browse-results p {
+  color: #7b8587;
+  font-size: 12px;
+  margin: 0;
+}
+
+.browse-count {
+  color: #236b66;
+  background: #edf4f1;
+  padding: 7px 11px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+/* Loading, empty and error states */
+
+.browse-message {
+  min-height: 260px;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #ece8e0;
+  border-radius: 14px;
+}
+
+.browse-message > i {
+  font-size: 35px;
+  color: #236b66;
+  margin-bottom: 12px;
+}
+
+.browse-message h5 {
+  color: #172027;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.browse-message p {
+  color: #687477;
+  font-size: 13px;
+  margin: 0;
+}
+
+.browse-spinner {
+  color: #236b66;
+  margin-bottom: 15px;
+}
+
+.browse-error > i {
+  color: #c45b50;
+}
+
+.browse-retry-btn {
+  margin-top: 18px;
+  padding: 9px 18px;
+  background: #236b66;
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.browse-retry-btn:hover {
+  background: #19534f;
+}
+
+/* Responsive */
+
+@media (max-width: 576px) {
+  .browse-page {
+    padding: 35px 0 55px;
+  }
+
+  .browse-heading {
+    margin-bottom: 28px;
+  }
+
+  .browse-heading h1 {
+    font-size: 27px;
+  }
+
+  .browse-results {
+    align-items: flex-start;
+  }
+
+  .browse-results p {
+    max-width: 200px;
+  }
+}
